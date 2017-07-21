@@ -1,0 +1,15 @@
+<h3>workerDetails</h3>
+<dl class="dl-horizontal" data-bind="if: item">
+        <dt>annotator</dt>
+        <dd data-bind="text: item()['annotator']"></dd>
+        <dt>fullname</dt>
+        <dd data-bind="text: item()['fullname']"></dd>
+        <dt>id</dt>
+        <dd data-bind="text: item()['id']"></dd>
+        <dt>selector</dt>
+        <dd data-bind="text: item()['selector']"></dd>
+</dl>
+<div class="row">
+    <a class="col-xs-2 btn btn-primary" data-bind="click: trigger.bind($data, 'ev-tap-selection')">endisSelection</a>
+    <a class="col-xs-2 btn btn-primary" data-bind="click: trigger.bind($data, 'ev-tap-annotation')">endisAnnotation</a>
+</div>

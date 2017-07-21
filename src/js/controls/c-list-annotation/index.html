@@ -1,0 +1,16 @@
+<h3>Annotation list</h3>
+<table class="table table-hover table-condensed">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>image</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: items">
+        <tr data-bind="click: $parent.select">
+            <td data-bind="text: id"></td>
+            <td data-bind="text: $data['image']" style="white-space: pre-wrap;"></td>
+        </tr>
+    </li>
+    </tbody>
+</table>

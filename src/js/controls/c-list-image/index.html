@@ -1,0 +1,16 @@
+<h3>imageList</h3>
+<table class="table table-hover table-condensed">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>canonical</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: items">
+        <tr data-bind="click: $parent.select">
+            <td data-bind="text: id"></td>
+            <td data-bind="text: $data['canonical']" style="white-space: pre-wrap;"></td>
+        </tr>
+    </li>
+    </tbody>
+</table>

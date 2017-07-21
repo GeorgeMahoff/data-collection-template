@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="row">
+        </div>
+</div>
+<!-- ko if: active() === 'vc-auth-block' -->
+    <!-- notAuthed -->
+    <c-vc-auth-block params="context: context"></c-vc-auth-block>
+<!-- /ko -->
+<!-- ko if: active() === 'vc-authed-block' -->
+    <!-- Authed -->
+    <c-vc-authed-block params="context: context"></c-vc-authed-block>
+<!-- /ko -->
+<!-- ko if: active() === 'vc-edit-account' -->
+    <!-- editAccount -->
+    <c-vc-edit-account params="context: context"></c-vc-edit-account>
+<!-- /ko -->

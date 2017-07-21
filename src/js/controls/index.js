@@ -1,0 +1,54 @@
+/*jslint node: true, nomen: true */
+"use strict";
+
+var ko = require('knockout');
+
+exports.register = function () {
+    require('./main-application').register();
+    require('./c-vc-mainapp').register();
+    require('./c-project-body').register();
+    require('./c-vc-edit-account').register();
+    require('./c-form-user-edit').register();
+    require('./c-vc-authed-block').register();
+    require('./c-det-user-info').register();
+    require('./c-xor-authed-role-block').register();
+    require('./c-vc-worker-main').register();
+    require('./c-xor-worker-workflow').register();
+    require('./c-vc-task-list').register();
+    require('./c-vc-task-details').register();
+    require('./c-vc-task-statistic').register();
+    require('./c-vc-task-session').register();
+    require('./c-list-task').register();
+    require('./c-det-task').register();
+    require('./c-det-task-stat').register();
+    require('./c-vc-auth-block').register();
+    require('./c-xor-signup-register').register();
+    require('./c-vc-signup').register();
+    require('./c-vc-login').register();
+    require('./c-form-sign-up').register();
+    require('./c-form-login').register();
+    require('./c-vc-manager-body').register();
+    require('./c-xor-manager-workflow').register();
+    require('./c-vc-add-campaign').register();
+    require('./c-vc-campaign-statistic').register();
+    require('./c-vc-image-details').register();
+    require('./c-vc-image-list').register();
+    require('./c-vc-image-upload').register();
+    require('./c-vc-worker-list').register();
+    require('./c-vc-image-stat').register();
+    require('./c-form-new-campaign').register();
+    require('./c-det-campaign-stat').register();
+    require('./c-det-image').register();
+    require('./c-list-image').register();
+    require('./c-form-image-upload').register();
+    require('./c-list-workers').register();
+    require('./c-det-image-stat').register();
+    require('./c-list-annotation').register();
+    require('./c-vc-campaign-list').register();
+    require('./c-list-campaigns').register();
+    require('./c-vc-campaign-details').register();
+    require('./c-det-campaign').register();
+    require('./c-vc-worker-details').register();
+    require('./c-det-worker').register();
+    require('./c-form-task-submit').register();
+};

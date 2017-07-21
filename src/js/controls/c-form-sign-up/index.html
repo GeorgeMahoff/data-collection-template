@@ -1,0 +1,26 @@
+<h3>signUpForm</h3>
+<form>
+    <div class="form-group" data-bind="css: {'has-error': errors()['fullname']}">
+        <label for="form-sign-up_field_0" data-bind="css: {active: fields()['fullname']}, attr: {'data-error': errors()['fullname']}" class="control-label">fullname</label>
+        <input id="form-sign-up_field_0" data-bind="value: fields()['fullname']" type="text" class="form-control validate" aria-describedby="form-sign-up_field_0_error">
+        <span id="form-sign-up_field_0_error" class="help-block" data-bind="text: errors()['fullname']"></span>
+    </div>
+    <div class="form-group" data-bind="css: {'has-error': errors()['password']}">
+        <label for="form-sign-up_field_1" data-bind="css: {active: fields()['password']}, attr: {'data-error': errors()['password']}" class="control-label">password</label>
+        <input id="form-sign-up_field_1" data-bind="value: fields()['password']" type="text" class="form-control validate" aria-describedby="form-sign-up_field_1_error">
+        <span id="form-sign-up_field_1_error" class="help-block" data-bind="text: errors()['password']"></span>
+    </div>
+    <div class="form-group" data-bind="css: {'has-error': errors()['type']}">
+        <label for="form-sign-up_field_2" data-bind="css: {active: fields()['type']}, attr: {'data-error': errors()['type']}" class="control-label">type</label>
+        <input id="form-sign-up_field_2" data-bind="value: fields()['type']" type="text" class="form-control validate" aria-describedby="form-sign-up_field_2_error">
+        <span id="form-sign-up_field_2_error" class="help-block" data-bind="text: errors()['type']"></span>
+    </div>
+    <div class="form-group" data-bind="css: {'has-error': errors()['username']}">
+        <label for="form-sign-up_field_3" data-bind="css: {active: fields()['username']}, attr: {'data-error': errors()['username']}" class="control-label">username</label>
+        <input id="form-sign-up_field_3" data-bind="value: fields()['username']" type="text" class="form-control validate" aria-describedby="form-sign-up_field_3_error">
+        <span id="form-sign-up_field_3_error" class="help-block" data-bind="text: errors()['username']"></span>
+    </div>
+</form>
+<div class="row">
+    <a class="col-xs-2 btn btn-primary" data-bind="click: trigger.bind($data, 'ev-signup-submit')">submit</a>
+</div>

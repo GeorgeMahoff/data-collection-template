@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="row">
+        </div>
+</div>
+<!-- ko if: active() === 'vc-task-list' -->
+    <!-- tasks -->
+    <c-vc-task-list params="context: context"></c-vc-task-list>
+<!-- /ko -->
+<!-- ko if: active() === 'vc-task-details' -->
+    <!-- Task details -->
+    <c-vc-task-details params="context: context"></c-vc-task-details>
+<!-- /ko -->
+<!-- ko if: active() === 'vc-task-statistic' -->
+    <!-- Task statistics -->
+    <c-vc-task-statistic params="context: context"></c-vc-task-statistic>
+<!-- /ko -->
+<!-- ko if: active() === 'vc-task-session' -->
+    <!-- Session -->
+    <c-vc-task-session params="context: context"></c-vc-task-session>
+<!-- /ko -->

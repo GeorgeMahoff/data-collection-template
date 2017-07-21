@@ -1,0 +1,44 @@
+<div class="container">
+    <div class="row">
+        </div>
+</div>
+<!-- ko if: active() === 'vc-campaign-list' -->
+    <!-- campaigns -->
+    <c-vc-campaign-list params="context: context"></c-vc-campaign-list>
+<!-- /ko -->
+<!-- ko if: active() === 'vc-add-campaign' -->
+    <!-- New campaign -->
+    <c-vc-add-campaign params="context: context"></c-vc-add-campaign>
+<!-- /ko -->
+<!-- ko if: active() === 'vc-campaign-details' -->
+    <!-- Campaign details -->
+    <c-vc-campaign-details params="context: context"></c-vc-campaign-details>
+<!-- /ko -->
+<!-- ko if: active() === 'vc-campaign-statistic' -->
+    <!-- Statistics -->
+    <c-vc-campaign-statistic params="context: context"></c-vc-campaign-statistic>
+<!-- /ko -->
+<!-- ko if: active() === 'vc-image-details' -->
+    <!-- Image details -->
+    <c-vc-image-details params="context: context"></c-vc-image-details>
+<!-- /ko -->
+<!-- ko if: active() === 'vc-image-list' -->
+    <!-- Images -->
+    <c-vc-image-list params="context: context"></c-vc-image-list>
+<!-- /ko -->
+<!-- ko if: active() === 'vc-image-upload' -->
+    <!-- Upload Image -->
+    <c-vc-image-upload params="context: context"></c-vc-image-upload>
+<!-- /ko -->
+<!-- ko if: active() === 'vc-worker-list' -->
+    <!-- Workers -->
+    <c-vc-worker-list params="context: context"></c-vc-worker-list>
+<!-- /ko -->
+<!-- ko if: active() === 'vc-worker-details' -->
+    <!-- Worker details -->
+    <c-vc-worker-details params="context: context"></c-vc-worker-details>
+<!-- /ko -->
+<!-- ko if: active() === 'vc-image-stat' -->
+    <!-- Image statistics -->
+    <c-vc-image-stat params="context: context"></c-vc-image-stat>
+<!-- /ko -->
