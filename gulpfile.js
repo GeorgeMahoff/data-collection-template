@@ -4,6 +4,7 @@
 var gulp = require('gulp'),
     rimraf = require('gulp-rimraf'),
     rename = require('gulp-rename'),
+    sass = require('gulp-sass'),
     minifyCss = require('gulp-cssnano'),
     browserify = require('browserify'),
     source = require('vinyl-source-stream'),
@@ -25,6 +26,7 @@ gulp.task('vendor', function () {
             './node_modules/bootstrap/dist/js/bootstrap.min.js',
             './node_modules/bootstrap-notify/bootstrap-notify.min.js',
             './node_modules/jquery/dist/jquery.min.js',
+            './node_modules/jquery.cookie/jquery.cookie.js',
             './node_modules/nedb/browser-version/out/nedb.min.js',
             './node_modules/bluebird/js/browser/bluebird.min.js'
         ]).pipe(gulp.dest('./www/js')),
@@ -61,11 +63,17 @@ gulp.task('js', function () {
         .pipe(gulp.dest('./www/js'));
 });
 
+gulp.task('styles', function() {
+    gulp.src('./src/sass/index.scss')
+        .pipe(sass().on('error', sass.logError))
+        .pipe(gulp.dest('./www/css'));
+});
+
 gulp.task('css', function () {
     return gulp.src('./node_modules/bootstrap/dist/css/bootstrap.min.css').pipe(gulp.dest('./www/css'));
 });
 
-gulp.task('build', ['html', 'css', 'js', 'vendor']);
+gulp.task('build', ['html', 'css', 'js', 'vendor', 'styles']);
 
 gulp.task('default', ['clean'], function () {
     return gulp.start('build');

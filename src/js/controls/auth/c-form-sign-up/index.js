@@ -27,14 +27,14 @@ ViewModel.prototype._compute = function () {
     this.output = {
         'fullname': this.input['fullname'],
         'password': this.input['password'],
-        'type': this.input['type'],
-        'username': this.input['username'],
-    }
+        'type': this.input['type'] || "worker",
+        'username': this.input['username']
+    };
     var self = this,
         fields = {
             'fullname': ko.observable(this.input['fullname']),
             'password': ko.observable(this.input['password']),
-            'type': ko.observable(this.input['type']),
+            'type': ko.observable(this.input['type'] || "worker"),
             'username': ko.observable(this.input['username']),
         },
         errors = {

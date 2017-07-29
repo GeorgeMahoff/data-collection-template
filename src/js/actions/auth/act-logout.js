@@ -12,24 +12,24 @@ function Action() { // add "options" parameters if needed
 }
 Action.prototype.run = function (parameters, solve) { // add "onCancel" parameters if needed
     // Parameters:
-    // parameters['fullname']
-    // parameters['password']
 
-    // TODO: Execution
-    /*
-    example:
-    mail.find({subject: 'Re: ' + data.subject})
-        .then(solve);
-    */
-    // THIS CAN BE REMOVED (BEGIN)
-    $.notify({message: 'updateUser'}, {allow_dismiss: true, type: 'success'});
-    solve({
-        event: 'ev-user-update-success', // success
-        data: {
-            'id': '0',
+    $.ajax({
+        url: window.remoteURL+'/api/auth',
+        type: 'DELETE',
+        headers: {
+            "Authorization" : "APIToken " + $.cookie('token')
+        },
+        success: function(data) {
+            $.removeCookie('token');
+            $.notify({message: 'Logout successful!'}, {allow_dismiss: true, type: 'success'});
+            solve({
+                event: 'ev-logout-success'
+            });
+        },
+        error: function(data) {
+            console.log(data);
         }
     });
-    // THIS CAN BE REMOVED (END)
 };
 
 exports.createAction = function (options) {

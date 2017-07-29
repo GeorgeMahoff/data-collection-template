@@ -1,9 +1,3 @@
-<div class="container">
-    <div class="row">
-            <a class="col-xs-2 btn btn-default" data-bind="click: landmark.bind($data, 'vc-worker-main'), css: {active: active() === 'vc-worker-main'}">workerBody</a>
-            <a class="col-xs-2 btn btn-default" data-bind="click: landmark.bind($data, 'vc-manager-body'), css: {active: active() === 'vc-manager-body'}">managerBody</a>
-        </div>
-</div>
 <!-- ko if: active() === 'vc-worker-main' -->
     <!-- workerBody -->
     <c-vc-worker-main params="context: context"></c-vc-worker-main>

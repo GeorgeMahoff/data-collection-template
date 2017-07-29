@@ -10,6 +10,11 @@ function ViewModel(params) {
 
     self.init = function (options) {
         options = options || {};
+        if(options['role'] === 'master'){
+            self.defaultChild = 'vc-manager-body';
+        } else {
+            self.defaultChild = 'vc-worker-main';
+        }
         self.active(self.defaultChild);
         if (self.defaultChild && options.mask !== self.defaultChild) {
             self.context.vms[self.defaultChild].init(options);
@@ -26,7 +31,8 @@ function ViewModel(params) {
 }
 
 ViewModel.prototype.id = 'xor-authed-role-block';
-ViewModel.prototype.defaultChild = 'vc-worker-main';
+// ViewModel.prototype.defaultChild = 'vc-worker-main';
+
 exports.register = function () {
     ko.components.register('c-xor-authed-role-block', {
         viewModel: {

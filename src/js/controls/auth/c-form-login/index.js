@@ -6,49 +6,57 @@ var ko = require('knockout'),
 
 function ViewModel(params) {
     var self = this;
-    self._repository = params.context.repositories['user'];
     self.context = params.context;
     self.status = ko.observable('');
-    self.item = ko.observable(undefined);
+    self.fields = ko.observable({});
+    self.errors = ko.observable({});
 
     self.trigger = function (id) {
-        self.context.events[id](self.context, self.item());
+        self.context.events[id](self.context, self.output);
     };
 }
 
-ViewModel.prototype.id = 'det-user-info';
-
-ViewModel.prototype.fields = {
-    id: 1
-    ,'role': 1
-    ,'username': 1
-};
+ViewModel.prototype.id = 'form-login';
 
 ViewModel.prototype.waitForStatusChange = function () {
-    return this._computing ||
-           this._initializing ||
+    return this._initializing ||
            Promise.resolve();
 };
 
-
-ViewModel.prototype._compute = function() {
-    if (this._computing) {
-        this._computing.cancel();
-    }
-    var self = this;
-    this._computing = this._repository.findById(this.filters.id, this.fields).then(function (item) {
-        self.output = item;
-        self.item(item);
-        self.status('computed');
-        self._computing = undefined;
+ViewModel.prototype._compute = function () {
+    this.output = {
+        'password': this.input['password'],
+        'username': this.input['username']
+    };
+    var self = this,
+        fields = {
+            'password': ko.observable(this.input['password']),
+            'username': ko.observable(this.input['username']),
+        },
+        errors = {
+            'password': ko.observable(this.input['password-error']),
+            'username': ko.observable(this.input['username-error']),
+        };
+    fields['password'].subscribe(function (value) {
+        self.output['password'] = value;
+        self.errors()['password'](undefined);
     });
+    fields['username'].subscribe(function (value) {
+        self.output['username'] = value;
+        self.errors()['username'](undefined);
+    });
+    this.fields(fields);
+    this.errors(errors);
+    this.status('computed');
 };
 
 
 ViewModel.prototype.init = function (options) {
     options = options || {};
     this.output = undefined;
-    this.filters = options.input || {};
+    this.fields({});
+    this.errors({});
+    this.input = options.input || {};
     this.status('ready');
     var self = this;
     this._initializing = new Promise(function (resolve) {
@@ -61,7 +69,7 @@ ViewModel.prototype.init = function (options) {
 };
 
 exports.register = function () {
-    ko.components.register('c-det-user-info', {
+    ko.components.register('c-form-login', {
         viewModel: {
             createViewModel: function (params, componentInfo) {
                 var vm = new ViewModel(params);
