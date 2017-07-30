@@ -1,31 +1,33 @@
-<h3>newCampaign</h3>
+<h3 data-bind="visible: !isEdit()">New campaign</h3>
+<h3 data-bind="visible: isEdit()">Edit campaign</h3>
 <form>
-    <div class="form-group" data-bind="css: {'has-error': errors()['annotation_replica']}">
-        <label for="form-new-campaign_field_0" data-bind="css: {active: fields()['annotation_replica']}, attr: {'data-error': errors()['annotation_replica']}" class="control-label">annotation_replica</label>
-        <input id="form-new-campaign_field_0" data-bind="value: fields()['annotation_replica']" type="text" class="form-control validate" aria-describedby="form-new-campaign_field_0_error">
-        <span id="form-new-campaign_field_0_error" class="help-block" data-bind="text: errors()['annotation_replica']"></span>
-    </div>
-    <div class="form-group" data-bind="css: {'has-error': errors()['annotation_size']}">
-        <label for="form-new-campaign_field_1" data-bind="css: {active: fields()['annotation_size']}, attr: {'data-error': errors()['annotation_size']}" class="control-label">annotation_size</label>
-        <input id="form-new-campaign_field_1" data-bind="value: fields()['annotation_size']" type="text" class="form-control validate" aria-describedby="form-new-campaign_field_1_error">
-        <span id="form-new-campaign_field_1_error" class="help-block" data-bind="text: errors()['annotation_size']"></span>
-    </div>
     <div class="form-group" data-bind="css: {'has-error': errors()['name']}">
         <label for="form-new-campaign_field_2" data-bind="css: {active: fields()['name']}, attr: {'data-error': errors()['name']}" class="control-label">name</label>
         <input id="form-new-campaign_field_2" data-bind="value: fields()['name']" type="text" class="form-control validate" aria-describedby="form-new-campaign_field_2_error">
         <span id="form-new-campaign_field_2_error" class="help-block" data-bind="text: errors()['name']"></span>
     </div>
+    <div class="form-group" data-bind="css: {'has-error': errors()['annotation_replica']}">
+        <label for="form-new-campaign_field_0" data-bind="css: {active: fields()['annotation_replica']}, attr: {'data-error': errors()['annotation_replica']}" class="control-label">annotation_replica</label>
+        <input id="form-new-campaign_field_0" data-bind="value: fields()['annotation_replica']" type="number" class="form-control validate" aria-describedby="form-new-campaign_field_0_error">
+        <span id="form-new-campaign_field_0_error" class="help-block" data-bind="text: errors()['annotation_replica']"></span>
+    </div>
+    <div class="form-group" data-bind="css: {'has-error': errors()['annotation_size']}">
+        <label for="form-new-campaign_field_1" data-bind="css: {active: fields()['annotation_size']}, attr: {'data-error': errors()['annotation_size']}" class="control-label">annotation_size</label>
+        <input id="form-new-campaign_field_1" data-bind="value: fields()['annotation_size']" type="number" class="form-control validate" aria-describedby="form-new-campaign_field_1_error">
+        <span id="form-new-campaign_field_1_error" class="help-block" data-bind="text: errors()['annotation_size']"></span>
+    </div>
     <div class="form-group" data-bind="css: {'has-error': errors()['selection_replica']}">
         <label for="form-new-campaign_field_3" data-bind="css: {active: fields()['selection_replica']}, attr: {'data-error': errors()['selection_replica']}" class="control-label">selection_replica</label>
-        <input id="form-new-campaign_field_3" data-bind="value: fields()['selection_replica']" type="text" class="form-control validate" aria-describedby="form-new-campaign_field_3_error">
+        <input id="form-new-campaign_field_3" data-bind="value: fields()['selection_replica']" type="number" class="form-control validate" aria-describedby="form-new-campaign_field_3_error">
         <span id="form-new-campaign_field_3_error" class="help-block" data-bind="text: errors()['selection_replica']"></span>
     </div>
     <div class="form-group" data-bind="css: {'has-error': errors()['threshold']}">
         <label for="form-new-campaign_field_4" data-bind="css: {active: fields()['threshold']}, attr: {'data-error': errors()['threshold']}" class="control-label">threshold</label>
-        <input id="form-new-campaign_field_4" data-bind="value: fields()['threshold']" type="text" class="form-control validate" aria-describedby="form-new-campaign_field_4_error">
+        <input id="form-new-campaign_field_4" data-bind="value: fields()['threshold']" type="number" class="form-control validate" aria-describedby="form-new-campaign_field_4_error">
         <span id="form-new-campaign_field_4_error" class="help-block" data-bind="text: errors()['threshold']"></span>
     </div>
 </form>
 <div class="row">
-    <a class="col-xs-2 btn btn-primary" data-bind="click: trigger.bind($data, 'ev-campaign-form-submit')">submit</a>
+    <a class="col-xs-2 btn btn-primary" data-bind="visible: !isEdit(), click: trigger.bind($data, 'ev-campaign-form-submit')">Create</a>
+    <a class="col-xs-2 btn btn-primary" data-bind="visible: isEdit(), click: trigger.bind($data, 'ev-edit-campaign-submit')">Update</a>
 </div>

@@ -10,6 +10,7 @@ function ViewModel(params) {
     self.status = ko.observable('');
     self.fields = ko.observable({});
     self.errors = ko.observable({});
+    self.isEdit = ko.observable(undefined);
 
     self.trigger = function (id) {
         self.context.events[id](self.context, self.output);
@@ -25,12 +26,13 @@ ViewModel.prototype.waitForStatusChange = function () {
 
 ViewModel.prototype._compute = function () {
     this.output = {
+        id: this.input['id'],
         'annotation_replica': this.input['annotation_replica'],
         'annotation_size': this.input['annotation_size'],
         'name': this.input['name'],
         'selection_replica': this.input['selection_replica'],
-        'threshold': this.input['threshold'],
-    }
+        'threshold': this.input['threshold']
+    };
     var self = this,
         fields = {
             'annotation_replica': ko.observable(this.input['annotation_replica']),
@@ -68,6 +70,7 @@ ViewModel.prototype._compute = function () {
     });
     this.fields(fields);
     this.errors(errors);
+    this.isEdit(!!this.input['name']);
     this.status('computed');
 };
 
@@ -77,6 +80,7 @@ ViewModel.prototype.init = function (options) {
     this.output = undefined;
     this.fields({});
     this.errors({});
+    this.isEdit(undefined);
     this.input = options.input || {};
     this.status('ready');
     var self = this;

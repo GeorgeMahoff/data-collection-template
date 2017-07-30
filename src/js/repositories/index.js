@@ -3,7 +3,6 @@
 
 exports.createRepositories = function (options) {
     var repositories = {}
-    repositories['user'] = require('./user').createRepository(options);
     repositories['task'] = require('./task').createRepository(options);
     repositories['taskstat'] = require('./taskstat').createRepository(options);
     repositories['campstat'] = require('./campstat').createRepository(options);

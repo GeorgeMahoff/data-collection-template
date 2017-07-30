@@ -44,7 +44,6 @@ ViewModel.prototype._compute = function() {
     }
     var self = this;
     this._computing = this._repository.findById(this.filters.id, this.fields).then(function (item) {
-        self.output = item;
         self.item(item);
         self.status('computed');
         self._computing = undefined;
@@ -54,7 +53,6 @@ ViewModel.prototype._compute = function() {
 
 ViewModel.prototype.init = function (options) {
     options = options || {};
-    this.output = undefined;
     this.filters = options.input || {};
     this.status('ready');
     var self = this;

@@ -5,7 +5,8 @@ exports.createEvent = function () { // add "options" parameter if needed
     return function (context, data) {
         data = data || {};
         var packet = {
-            'id' : data['id']
+            'id' : data['id'],
+            'execution': data['execution']
         };
         var promise = context.actions['act-stop-campaign']({filters: packet});
         context.runningActionsByContainer['vc-campaign-details'].push(promise);

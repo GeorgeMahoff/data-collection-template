@@ -26,8 +26,7 @@ function ViewModel(params) {
 ViewModel.prototype.id = 'list-campaigns';
 
 ViewModel.prototype.fields = {
-    id: 1
-    ,'name': 1
+    'name': 1
     ,'status': 1
 };
 
@@ -44,6 +43,7 @@ ViewModel.prototype._compute = function() {
     var self = this;
     this._computing = this._repository.find(this.filters, this.fields).then(function (items) {
         self.selected(undefined);
+        items = items['campaigns'];
         self.items(items);
         if (items.length) {
             self.selected(items[0].id);
