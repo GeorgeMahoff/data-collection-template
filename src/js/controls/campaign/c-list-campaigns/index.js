@@ -25,10 +25,6 @@ function ViewModel(params) {
 
 ViewModel.prototype.id = 'list-campaigns';
 
-ViewModel.prototype.fields = {
-    'name': 1
-    ,'status': 1
-};
 
 ViewModel.prototype.waitForStatusChange = function () {
     return this._computing ||
@@ -41,7 +37,7 @@ ViewModel.prototype._compute = function() {
         this._computing.cancel();
     }
     var self = this;
-    this._computing = this._repository.find(this.filters, this.fields).then(function (items) {
+    this._computing = this._repository.find().then(function (items) {
         self.selected(undefined);
         items = items['campaigns'];
         self.items(items);

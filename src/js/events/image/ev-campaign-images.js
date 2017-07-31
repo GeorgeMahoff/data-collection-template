@@ -3,6 +3,13 @@
 
 exports.createEvent = function () { // add "options" parameter if needed
     return function (context, data) {
+
+        data = data || {};
+        var packet = {
+            'campaign' : data['image'],
+            'back': data['id']
+        };
+
         if (!context.vms['vc-mainapp']) {
             context.top.active('vc-mainapp');
             context.vms['vc-mainapp'].init({mask: 'project-body'});
@@ -17,12 +24,9 @@ exports.createEvent = function () { // add "options" parameter if needed
         }
         if (!context.vms['vc-image-list']) {
             context.vms['xor-manager-workflow'].active('vc-image-list');
-            context.vms['vc-image-list'].init({mask: 'list-image'});
+            context.vms['vc-image-list'].init({mask: 'list-image', input: packet});
         }
-        data = data || {};
-        var packet = {
-            'campaign' : data['images']
-        };
-        context.vms['list-image'].init({input: packet});
+
+        // context.vms['list-image'].init({input: packet});
     };
 };

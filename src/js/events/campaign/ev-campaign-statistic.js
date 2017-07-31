@@ -21,7 +21,8 @@ exports.createEvent = function () { // add "options" parameter if needed
         }
         data = data || {};
         var packet = {
-            'id' : data['id']
+            'id' : data['statistics'],
+            'back': data['id']
         };
         context.vms['det-campaign-stat'].init({input: packet});
     };

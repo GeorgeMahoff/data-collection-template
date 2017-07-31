@@ -19,7 +19,7 @@ Repository.prototype.findById = function (id) {
     }));
 };
 
-Repository.prototype.find = function (fields, project) {
+Repository.prototype.find = function () {
     return Promise.resolve($.ajax({
         url: window.remoteURL + '/api/campaign',
         type: 'GET',
@@ -31,7 +31,7 @@ Repository.prototype.find = function (fields, project) {
 
 Repository.prototype.getStatistic = function (id) {
     return Promise.resolve($.ajax({
-        url: window.remoteURL + '/api/campaign',
+        url: window.remoteURL + id,
         type: 'GET',
         headers: {
             "Authorization" : "APIToken " + $.cookie("token")

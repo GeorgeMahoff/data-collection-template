@@ -9,7 +9,7 @@
     <tbody data-bind="foreach: items">
         <tr data-bind="click: $parent.select">
             <td data-bind="text: $data['name']" style="white-space: pre-wrap;"></td>
-            <td data-bind="text: $data['status']" style="white-space: pre-wrap;"></td>
+            <td data-bind="text: $data['status'].toProperCase()" style="white-space: pre-wrap;"></td>
         </tr>
     </tbody>
 </table>

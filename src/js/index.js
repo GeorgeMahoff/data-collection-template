@@ -10,8 +10,11 @@ var ko = require('knockout'),
 
 Promise.config({cancellation: true});
 
+String.prototype.toProperCase = function () {
+    return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+};
+
 controls.register();
-// TODO: register any custom control
 
 function ApplicationViewModel() {
     // TODO: initialize global state

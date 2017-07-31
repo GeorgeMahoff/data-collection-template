@@ -5,7 +5,8 @@ exports.createEvent = function () { // add "options" parameter if needed
     return function (context, data) {
         data = data || {};
         var packet = {
-            'image' : data['image']
+            'image' : data['image'],
+            'url' : data['url']
         };
         var promise = context.actions['act-upload-image']({filters: packet});
         context.runningActionsByContainer['vc-image-upload'].push(promise);

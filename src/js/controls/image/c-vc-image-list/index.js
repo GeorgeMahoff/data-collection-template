@@ -8,17 +8,17 @@ function ViewModel(params) {
     self.context = params.context;
 
     self.init = function (options) {
+        this.output = options.input['campaign'];
         options = options || {};
+        console.log("vc det");
+        console.log(options);
         self.children.forEach(function (child){
-            if (child === options.mask) {
-                return;
-            }
             self.context.vms[child].init(options);
         });
     };
 
     self.trigger = function (id) {
-        self.context.events[id](self.context);
+        self.context.events[id](self.context, this.output);
     };
 }
 

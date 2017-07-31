@@ -2,7 +2,8 @@
 "use strict";
 
 exports.createEvent = function () { // add "options" parameter if needed
-    return function (context) {
+    return function (context, data) {
+        // console.log(data);
         if (!context.vms['vc-mainapp']) {
             context.top.active('vc-mainapp');
             context.vms['vc-mainapp'].init({mask: 'project-body'});
@@ -17,7 +18,14 @@ exports.createEvent = function () { // add "options" parameter if needed
         }
         if (!context.vms['vc-image-upload']) {
             context.vms['xor-manager-workflow'].active('vc-image-upload');
+            context.vms['vc-image-upload'].init({mask: 'form-image-upload'});
         }
-        context.vms['vc-image-upload'].init();
+
+        data = data || {};
+        var packet = {
+            'url' : data
+        };
+
+        context.vms['form-image-upload'].init({input: packet});
     };
 };

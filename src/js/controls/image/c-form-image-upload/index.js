@@ -8,11 +8,13 @@ function ViewModel(params) {
     var self = this;
     self.context = params.context;
     self.status = ko.observable('');
-    self.fields = ko.observable({});
-    self.errors = ko.observable({});
 
     self.trigger = function (id) {
         self.context.events[id](self.context, self.output);
+    };
+
+    self.onUpload = function (vm, evt) {
+        self.output['image'] = evt.target.files[0];
     };
 }
 
@@ -25,21 +27,8 @@ ViewModel.prototype.waitForStatusChange = function () {
 
 ViewModel.prototype._compute = function () {
     this.output = {
-        'image': this.input['image'],
-    }
-    var self = this,
-        fields = {
-            'image': ko.observable(this.input['image']),
-        },
-        errors = {
-            'image': ko.observable(this.input['image-error']),
-        };
-    fields['image'].subscribe(function (value) {
-        self.output['image'] = value;
-        self.errors()['image'](undefined);
-    });
-    this.fields(fields);
-    this.errors(errors);
+        'url': this.input['url']
+    };
     this.status('computed');
 };
 
@@ -47,8 +36,6 @@ ViewModel.prototype._compute = function () {
 ViewModel.prototype.init = function (options) {
     options = options || {};
     this.output = undefined;
-    this.fields({});
-    this.errors({});
     this.input = options.input || {};
     this.status('ready');
     var self = this;

@@ -6,7 +6,7 @@ var ko = require('knockout'),
 
 function ViewModel(params) {
     var self = this;
-    self._repository = params.context.repositories['campstat'];
+    self._repository = params.context.repositories['campaign'];
     self.context = params.context;
     self.status = ko.observable('');
     self.item = ko.observable(undefined);
@@ -38,7 +38,7 @@ ViewModel.prototype._compute = function() {
         this._computing.cancel();
     }
     var self = this;
-    this._computing = this._repository.findById(this.filters.id, this.fields).then(function (item) {
+    this._computing = this._repository.getStatistic(this.filters['id']).then(function (item) {
         self.output = item;
         self.item(item);
         self.status('computed');
