@@ -3,7 +3,7 @@
 
 exports.createEvent = function () { // add "options" parameter if needed
     return function (context, data) {
-        // console.log(data);
+        console.log(data);
         if (!context.vms['vc-mainapp']) {
             context.top.active('vc-mainapp');
             context.vms['vc-mainapp'].init({mask: 'project-body'});

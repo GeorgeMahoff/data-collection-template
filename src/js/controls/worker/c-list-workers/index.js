@@ -9,20 +9,26 @@ function ViewModel(params) {
     self._repository = params.context.repositories['worker'];
     self.context = params.context;
     self.status = ko.observable('');
-    self.item = ko.observable(undefined);
+    self.selected = ko.observable(undefined);
+    self.items = ko.observableArray([]);
+
+    self.select = function() {
+        self.selected(this.id);
+        self.output = this;
+        self.trigger.call(this, 'ev-list-worker');
+    };
 
     self.trigger = function (id) {
-        self.context.events[id](self.context, self.item());
+        self.context.events[id](self.context, this);
     };
 }
 
-ViewModel.prototype.id = 'det-worker';
+ViewModel.prototype.id = 'list-workers';
 
 ViewModel.prototype.fields = {
     id: 1
     ,'annotator': 1
     ,'fullname': 1
-    ,'id': 1
     ,'selector': 1
 };
 
@@ -32,15 +38,25 @@ ViewModel.prototype.waitForStatusChange = function () {
            Promise.resolve();
 };
 
-
 ViewModel.prototype._compute = function() {
     if (this._computing) {
         this._computing.cancel();
     }
     var self = this;
-    this._computing = this._repository.findById(this.filters.id, this.fields).then(function (item) {
-        self.output = item;
-        self.item(item);
+    console.log('inside workers compute');
+    console.log(this.filters['worker']);
+    this._computing = this._repository.find(this.filters['worker']).then(function (items) {
+        self.selected(undefined);
+        items = items['workers'];
+        if (items.length) {
+            for (var i = 0; i < items.length; i++) {
+                items[i].selector = items[i].selector ? "Yes" : "No";
+                items[i].annotator = items[i].annotator ? "Yes" : "No";
+            }
+            self.selected(items[0].id);
+            self.output = items[0];
+        }
+        self.items(items);
         self.status('computed');
         self._computing = undefined;
     });
@@ -63,7 +79,7 @@ ViewModel.prototype.init = function (options) {
 };
 
 exports.register = function () {
-    ko.components.register('c-det-worker', {
+    ko.components.register('c-list-workers', {
         viewModel: {
             createViewModel: function (params, componentInfo) {
                 var vm = new ViewModel(params);

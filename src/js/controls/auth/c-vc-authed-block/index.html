@@ -1,0 +1,17 @@
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <!-- User info -->
+            <c-det-user-info params="context: context"></c-det-user-info>
+
+        </div>
+        <div class="nav navbar-nav navbar-right subnav">
+            <button class="btn btn-default navbar-btn" data-bind="click: trigger.bind($data,'ev-edit-account')">Edit account</button>
+            <button class="btn btn-default navbar-btn" data-bind="click: trigger.bind($data,'ev-logout')">Logout</button>
+        </div>
+    </div>
+</nav>
+
+    <!-- AuthedBody -->
+    <c-xor-authed-role-block params="context: context"></c-xor-authed-role-block>
+

@@ -1,4 +1,6 @@
 <span>
+    <a class="col-xs-2 btn btn-primary" data-bind="visible: !isEdit(), click: trigger.bind($data,'ev-body-init')">Back to list</a>
+    <a class="col-xs-2 btn btn-primary" data-bind="visible: isEdit(), click: trigger.bind($data,'ev-list-campaign-selected')">Back to campaign</a>
     <!-- newCampaign -->
     <c-form-new-campaign params="context: context"></c-form-new-campaign>
 </span>

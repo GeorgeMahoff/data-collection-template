@@ -16,15 +16,13 @@ exports.createEvent = function () { // add "options" parameter if needed
             context.top.active('vc-mainapp');
             context.vms['vc-mainapp'].init({mask: 'project-body'});
         }
-        if (!context.vms['vc-authed-block']) {
-            context.vms['project-body'].active('vc-authed-block');
-            context.vms['vc-authed-block'].init({
-                mask: 'det-user-info',
-                role: packet['type']
-            });
-        }
 
-        // context.vms['xor-authed-role-block'].init({input: packet['type']});
+        context.vms['project-body'].active('vc-authed-block');
+        context.vms['vc-authed-block'].init({
+            mask: 'det-user-info',
+            role: packet['type']
+        });
+
         context.vms['det-user-info'].init({input: packet});
     };
 };

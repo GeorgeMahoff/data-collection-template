@@ -1,0 +1,14 @@
+<h3>Worker details</h3>
+<dl class="dl-horizontal" data-bind="if: item">
+    <dt>Full name</dt>
+    <dd data-bind="text: item()['fullname']"></dd>
+    <dt>Annotator?</dt>
+    <dd data-bind="text: item()['annotator']"></dd>
+    <dt>Selector?</dt>
+    <dd data-bind="text: item()['selector']"></dd>
+    <div class="row">
+        <a class="col-xs-2 btn btn-primary" data-bind="click: switchTaskState(false), text: item()['annotatorButton']+'annotation'" ></a>
+        <a class="col-xs-2 btn btn-primary" data-bind="click: switchTaskState(true), text: item()['selectorButton']+'selection'"></a>
+    </div>
+</dl>
+

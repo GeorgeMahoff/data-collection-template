@@ -22,13 +22,13 @@ function ViewModel(params) {
     };
 }
 
-ViewModel.prototype.id = 'vc-worker-list';
+ViewModel.prototype.id = 'vc-worker-details';
 ViewModel.prototype.children = [
-    'list-workers' // Workers
+    'det-worker' // workerDetails
 ];
 
 exports.register = function () {
-    ko.components.register('c-vc-worker-list', {
+    ko.components.register('c-vc-worker-details', {
         viewModel: {
             createViewModel: function (params, componentInfo) {
                 var vm = new ViewModel(params);
@@ -37,7 +37,7 @@ exports.register = function () {
                 ko.utils.domNodeDisposal.addDisposeCallback(componentInfo.element, function () {
                     params.context.runningActionsByContainer[vm.id].forEach(function (promise) {
                         promise.cancel();
-                    })
+                    });
                     delete params.context.runningActionsByContainer[vm.id];
                     delete params.context.vms[vm.id];
                 });

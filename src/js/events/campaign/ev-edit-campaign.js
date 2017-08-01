@@ -10,7 +10,8 @@ exports.createEvent = function () { // add "options" parameter if needed
             'selection_replica': data['selection_replica'],
             'annotation_replica': data['annotation_replica'],
             'annotation_size': data['annotation_size'],
-            'threshold': data['threshold']
+            'threshold': data['threshold'],
+            'isEdit': true
         };
 
         if (!context.vms['vc-mainapp']) {
@@ -27,8 +28,7 @@ exports.createEvent = function () { // add "options" parameter if needed
         }
         if (!context.vms['vc-add-campaign']) {
             context.vms['xor-manager-workflow'].active('vc-add-campaign');
-            context.vms['vc-add-campaign'].init({mask: 'form-new-campaign'});
+            context.vms['vc-add-campaign'].init({mask: 'form-new-campaign',input: packet});
         }
-        context.vms['form-new-campaign'].init({input: packet});
     };
 };

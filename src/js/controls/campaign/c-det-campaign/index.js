@@ -37,6 +37,21 @@ ViewModel.prototype.waitForStatusChange = function () {
            Promise.resolve();
 };
 
+ViewModel.prototype.startCampaign = function () {
+    var self = this;
+
+    this._repository.start(this.item().execution).then(function () {
+        self.context.events['ev-list-campaign-selected'](self.context, {id: self.item().id});
+    });
+};
+
+ViewModel.prototype.stopCampaign = function () {
+    var self = this;
+
+    this._repository.stop(this.item().execution).then(function () {
+        self.context.events['ev-list-campaign-selected'](self.context, {id: self.item().id});
+    });
+};
 
 ViewModel.prototype._compute = function() {
     if (this._computing) {

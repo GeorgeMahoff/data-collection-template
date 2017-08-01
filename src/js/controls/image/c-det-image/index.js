@@ -21,7 +21,6 @@ ViewModel.prototype.id = 'det-image';
 ViewModel.prototype.fields = {
     id: 1
     ,'canonical': 1
-    ,'id': 1
     ,'statistics': 1
 };
 
@@ -39,12 +38,23 @@ ViewModel.prototype._compute = function() {
     var self = this;
     this._computing = this._repository.findById(this.filters.id, this.fields).then(function (item) {
         self.output = item;
+        item["canonical"]=window.remoteURL+item['canonical'];
         self.item(item);
         self.status('computed');
         self._computing = undefined;
     });
 };
 
+ViewModel.prototype.deleteImage = function() {
+    var self = this;
+    console.log(self.item());
+    this._repository.delete(self.item().id).then(function () {
+        var packet = {
+            'image': self.item().id.cutURLTail()
+        };
+        self.context.events['ev-campaign-images'](self.context, packet);
+    });
+};
 
 ViewModel.prototype.init = function (options) {
     options = options || {};

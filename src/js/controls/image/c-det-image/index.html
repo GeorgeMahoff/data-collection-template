@@ -1,13 +1,8 @@
-<h3>imageDetails</h3>
+<h3>Image details</h3>
 <dl class="dl-horizontal" data-bind="if: item">
-        <dt>canonical</dt>
-        <dd data-bind="text: item()['canonical']"></dd>
-        <dt>id</dt>
-        <dd data-bind="text: item()['id']"></dd>
-        <dt>statistics</dt>
-        <dd data-bind="text: item()['statistics']"></dd>
+        <img height="200px" data-bind="attr:{src: item()['canonical']}" />
 </dl>
 <div class="row">
-    <a class="col-xs-2 btn btn-primary" data-bind="click: trigger.bind($data, 'ev-delete-image')">delete</a>
+    <a class="col-xs-2 btn btn-primary" data-bind="click: deleteImage">Delete</a>
     <a class="col-xs-2 btn btn-primary" data-bind="click: trigger.bind($data, 'ev-to-image-statistic')">statistics</a>
 </div>

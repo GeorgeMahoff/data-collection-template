@@ -44,15 +44,10 @@ ViewModel.prototype._compute = function() {
     this._computing = this._repository.find(this.filters['campaign']).then(function (items) {
         self.selected(undefined);
         items = items['images'];
-        console.log(items);
-        console.log(items[0]);
         if (items.length) {
             for (var i = 0; i < items.length; i++) {
                 items[i].canonical = window.remoteURL + items[i].canonical;
             }
-            // self.items().foreach(function (a) {
-            //
-            // });
             self.selected(items[0].id);
             self.output = items[0];
         }

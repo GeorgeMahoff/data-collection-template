@@ -1,15 +1,24 @@
-<h3>imageList</h3>
-<table class="table table-hover table-condensed">
-    <thead>
-        <tr>
-            <th>Image</th>
-        </tr>
-    </thead>
-    <tbody data-bind="foreach: items">
-        <tr data-bind="click: $parent.select">
-            <td><img height="100px" data-bind="attr:{src: $data['canonical']}" /></td>
-            <!--<td data-bind="text: " style="white-space: pre-wrap;"></td>-->
-        </tr>
-    </li>
-    </tbody>
-</table>
+<h3>Available images</h3>
+<div class="row" data-bind="foreach: items">
+    <div class="col-xs-6 col-md-3">
+        <a class="thumbnail" data-bind="click: $parent.select">
+            <img class="img-element" data-bind="attr:{src: $data['canonical']}">
+        </a>
+    </div>
+</div>
+<!--<table class="table table-hover table-condensed">-->
+    <!--<thead>-->
+        <!--<tr>-->
+            <!--<th>Image</th>-->
+        <!--</tr>-->
+    <!--</thead>-->
+
+    <!--</tbody>-->
+<!--</table>-->
+
+<!--<tbody data-bind="foreach: items">-->
+<!--<tr data-bind="click: $parent.select">-->
+    <!--<td><img height="100px" data-bind="attr:{src: $data['canonical']}" /></td>-->
+    <!--&lt;!&ndash;<td data-bind="text: " style="white-space: pre-wrap;"></td>&ndash;&gt;-->
+<!--</tr>-->
+<!--</li>-->

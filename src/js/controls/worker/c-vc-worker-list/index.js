@@ -9,10 +9,8 @@ function ViewModel(params) {
 
     self.init = function (options) {
         options = options || {};
+        this.output = options.input['worker'];
         self.children.forEach(function (child){
-            if (child === options.mask) {
-                return;
-            }
             self.context.vms[child].init(options);
         });
     };
@@ -22,13 +20,13 @@ function ViewModel(params) {
     };
 }
 
-ViewModel.prototype.id = 'vc-worker-details';
+ViewModel.prototype.id = 'vc-worker-list';
 ViewModel.prototype.children = [
-    'det-worker' // workerDetails
+    'list-workers' // Workers
 ];
 
 exports.register = function () {
-    ko.components.register('c-vc-worker-details', {
+    ko.components.register('c-vc-worker-list', {
         viewModel: {
             createViewModel: function (params, componentInfo) {
                 var vm = new ViewModel(params);

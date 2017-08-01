@@ -5,10 +5,12 @@ exports.createEvent = function () { // add "options" parameter if needed
     return function (context, data) {
 
         data = data || {};
+        console.log("Inside event");
+        console.log(data);
         var packet = {
-            'campaign' : data['image'],
-            'back': data['id']
+            'campaign' : data['image']
         };
+        console.log(packet);
 
         if (!context.vms['vc-mainapp']) {
             context.top.active('vc-mainapp');

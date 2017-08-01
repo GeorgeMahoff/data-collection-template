@@ -1,11 +1,7 @@
-<h3>Upload new image</h3>
-<form enctype="multipart/form-data">
-    <!--<div class="form-group" data-bind="css: {'has-error': errors()['image']}">-->
-        <!--<label for="form-image-upload_field_0" data-bind="css: {active: fields()['image']}, attr: {'data-error': errors()['image']}" class="control-label">Select file</label>-->
-        <input id="form-image-upload_field_0" data-bind="event:{change: onUpload}" type="file" class="form-control validate" aria-describedby="form-image-upload_field_0_error">
-        <!--<span id="form-image-upload_field_0_error" class="help-block" data-bind="text: errors()['image']"></span>-->
-    <!--</div>-->
+<h3>Select new image</h3>
+<form enctype="multipart/form-data" data-bind="submit: uploadImage">
+    <input id="form-image-upload_field_0" data-bind="event:{change: onUpload}" type="file" class="form-control validate" aria-describedby="form-image-upload_field_0_error" required>
+    <button type="submit" class="btn btn-primary col-xs-2">
+        Submit
+    </button>
 </form>
-<div class="row">
-    <a class="col-xs-2 btn btn-primary" data-bind="click: trigger.bind($data, 'ev-upload-image-submit')">Submit</a>
-</div>

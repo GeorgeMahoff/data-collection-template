@@ -7,6 +7,7 @@ var ko = require('knockout'),
 function ViewModel(params) {
     var self = this;
     self.context = params.context;
+    self._repository = params.context.repositories['campaign'];
     self.status = ko.observable('');
     self.fields = ko.observable({});
     self.errors = ko.observable({});
@@ -18,6 +19,23 @@ function ViewModel(params) {
 }
 
 ViewModel.prototype.id = 'form-new-campaign';
+
+ViewModel.prototype.createNewCampaign = function () {
+    var self = this;
+    var packet = {
+        packet: self.output
+    };
+    if (this.isEdit()){
+        packet.url = self.url;
+        this._repository.update(packet).then(function() {
+            self.context.events['ev-list-campaign-selected'](self.context, {id: self.url});
+        });
+    }else {
+        this._repository.insert(packet).then(function(data) {
+            self.context.events['ev-list-campaign-selected'](self.context, {id: data});
+        });
+    }
+};
 
 ViewModel.prototype.waitForStatusChange = function () {
     return this._initializing ||
@@ -70,7 +88,9 @@ ViewModel.prototype._compute = function () {
     });
     this.fields(fields);
     this.errors(errors);
-    this.isEdit(!!this.input['name']);
+    this.url = this.input['id'];
+    this.isEdit(!!this.url);
+    // this.isEdit(!!this.input['id']);
     this.status('computed');
 };
 

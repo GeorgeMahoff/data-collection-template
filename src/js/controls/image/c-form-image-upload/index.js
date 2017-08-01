@@ -6,6 +6,7 @@ var ko = require('knockout'),
 
 function ViewModel(params) {
     var self = this;
+    self._repository = params.context.repositories['image'];
     self.context = params.context;
     self.status = ko.observable('');
 
@@ -45,6 +46,17 @@ ViewModel.prototype.init = function (options) {
             resolve();
             self._initializing = undefined;
         }, 1);
+    });
+};
+
+ViewModel.prototype.uploadImage = function() {
+    var self = this;
+    console.log(self.output);
+    this._repository.insert(self.output).then(function () {
+        var packet = {
+            'image': self.output['url']
+        };
+        self.context.events['ev-campaign-images'](self.context, packet);
     });
 };
 

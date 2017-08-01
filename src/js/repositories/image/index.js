@@ -9,11 +9,52 @@ function Repository(options) {
     }
 }
 
+Repository.prototype.delete = function (id) {
+    return Promise.resolve($.ajax({
+        url: window.remoteURL + id,
+        type: 'DELETE',
+        headers: {
+            "Authorization" : "APIToken " + $.cookie("token")
+        }
+    }));
+};
+
+Repository.prototype.insert = function (parameters) {
+
+    var image = parameters["image"];
+    var fd = new FormData();
+    fd.append("file", image);
+
+    return Promise.resolve($.ajax({
+        url: window.remoteURL+parameters['url'],
+        type: 'POST',
+        headers: {
+            "Authorization" : "APIToken " + $.cookie('token')
+        },
+        data: fd,
+        cache: false,
+        contentType: false,
+        processData: false,
+        xhr: function() {
+            return $.ajaxSettings.xhr();
+        },
+        success: function() {
+            $.notify({message: 'Image uploaded!'}, {allow_dismiss: true, type: 'success'});
+        },
+        error: function(data) {
+            console.log(data)
+        }
+    }));
+};
+
 Repository.prototype.findById = function (id) {
-    // TODO: implement the accessor to the datasource which returns a promise
-    // TODO: remove this BEGIN
-    return this.db.findOneAsync({id: id});
-    // TODO: remove this END
+    return Promise.resolve($.ajax({
+        url: window.remoteURL + id,
+        type: 'GET',
+        headers: {
+            "Authorization" : "APIToken " + $.cookie("token")
+        }
+    }));
 };
 
 Repository.prototype.find = function (campaignId) {

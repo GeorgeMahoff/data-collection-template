@@ -3,6 +3,7 @@
 
 exports.createEvent = function () { // add "options" parameter if needed
     return function (context, data) {
+
         if (!context.vms['vc-mainapp']) {
             context.top.active('vc-mainapp');
             context.vms['vc-mainapp'].init({mask: 'project-body'});
@@ -19,6 +20,7 @@ exports.createEvent = function () { // add "options" parameter if needed
             context.vms['xor-manager-workflow'].active('vc-campaign-details');
             context.vms['vc-campaign-details'].init({mask: 'det-campaign'});
         }
+
         data = data || {};
         var packet = {
             'id' : data['id']

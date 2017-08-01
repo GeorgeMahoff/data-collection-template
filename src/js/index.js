@@ -14,6 +14,11 @@ String.prototype.toProperCase = function () {
     return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 };
 
+String.prototype.cutURLTail = function () {
+    var str = this.substr(this.lastIndexOf('/')) + '$';
+    return this.replace( new RegExp(str), '' );
+};
+
 controls.register();
 
 function ApplicationViewModel() {
