@@ -73,7 +73,11 @@ gulp.task('css', function () {
     return gulp.src('./node_modules/bootstrap/dist/css/bootstrap.min.css').pipe(gulp.dest('./www/css'));
 });
 
-gulp.task('build', ['html', 'css', 'js', 'vendor', 'styles']);
+gulp.task('image', function () {
+    return gulp.src('./resources/img/model.jpg').pipe(gulp.dest('./www/img'));
+});
+
+gulp.task('build', ['html', 'css', 'js', 'vendor', 'styles', 'image']);
 
 gulp.task('default', ['clean'], function () {
     return gulp.start('build');

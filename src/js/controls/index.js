@@ -51,4 +51,5 @@ exports.register = function () {
     require('./worker/c-vc-worker-details').register();
     require('./worker/c-det-worker').register();
     require('./c-form-task-submit').register();
+    require('./c-vc-about').register();
 };

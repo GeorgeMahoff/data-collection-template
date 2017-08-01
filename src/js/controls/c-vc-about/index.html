@@ -1,0 +1,50 @@
+<div class="jumbotron">
+    <h3>Prototype of this project was modelled with IFML</h3>
+    <img class="img-rounded img-responsive" src="./img/model.jpg">
+    <a class="btn btn-primary btn-lg" href="http://info.ifmledit.org/" role="button">Learn more about IFML</a>
+</div>
+<div class="container">
+    <div class="row">
+        <p>
+            The project addresses the development of a web based crowdsourcing platform for image annotations using
+            a Rich Internet Application architecture, whereby the interface is contained in a single page and
+            client-server roundtrips are minimized.
+        </p>
+        <p>
+            The application manages crowdsourcing campaigns published by <b>managers</b> and executed by <b>workers</b>.
+            Both kinds of users can register in the platform and login under their specific role.
+        </p>
+        <p>
+            The manager can create one or more crowdsourcing campaigns. A campaign has a name, some configuration
+            parameters and a set of input images. Aim of the campaign is the annotation of images with the skyline
+            of the landscape. A preliminary step allows workers to validate or discard the images to be annotated:
+            only the images that contain a mountain profile will pass this first stage and therefore are <i>selected</i>;
+            they will be then <i>annotated</i>.
+        </p>
+        <p>
+            Each task is executed by a set of workers; the assignment of the images to each worker is decided by
+            means of a scheduling algorithm, which is based on parameters associated with the campaign (the algorithm
+            needs not be realized and will be provided through APIs). The worker’s tasks are executed as follows:
+        </p>
+        <ul>
+            <li>
+                <b>Image Selection task</b>: the input for this task is an image; its output is a Boolean value specifying
+                if the image contains a mountain profile or not. Given the image, the user can only accept or reject it.
+                For a given image the task must be executed by at least N workers: the value of N is a campaign
+                specific configuration parameter defined by the manager. If an image obtains at least K positive
+                evaluations in the Image Selection task, it can be annotated. K is a campaign specific configuration
+                parameter defined by the manager.
+            </li>
+            <li>
+                <b>Image Annotation task</b>: the input of this task is an image; its output is a line (or a set of
+                lines, if the skyline is interrupted by obstacles), which identifies the profile (skyline) of
+                the mountain. Given the image the user can: <b>draw</b> the line (the component for drawing the line
+                will be provided); <b>clear</b> the annotation, i.e., erase the current annotation and restart drawing;
+                <b>send</b> the annotation to the server. It is not permitted to send an empty annotation to the server.
+                The width of the annotation line is a campaign configuration parameter (an integer number of pixels,
+                between 1 to 10). For each image of the campaign, this task must be executed by at least M workers:
+                M is a campaign specific configuration parameter defined by the manager.
+            </li>
+        </ul>
+    </div>
+</div>
