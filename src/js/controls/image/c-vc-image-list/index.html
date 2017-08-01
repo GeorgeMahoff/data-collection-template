@@ -1,5 +1,10 @@
-<span>
-    <a class="col-xs-2 btn btn-primary" data-bind="click: trigger.bind($data,'ev-to-upload-image')">Upload new image</a>
+<span data-bind="if: campaign">
+    <a class="col-xs-2 btn btn-primary" data-bind="click: trigger.bind($data,'ev-list-campaign-selected')">Back to campaign</a>
+    <a class="col-xs-2 btn btn-primary" data-bind="visible: campaign()['status']==='ready', click: trigger.bind($data,'ev-to-upload-image')">Upload new image</a>
+    <span class="info-note col-xs-3 btn btn-info pull-right" data-bind="if: campaign">
+        <label data-bind="text: campaign()['name']+' : '"></label>
+        <label data-bind="text: campaign()['status']"></label>
+    </span>
     <!-- imageList -->
     <c-list-image params="context: context"></c-list-image>
 </span>

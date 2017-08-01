@@ -14,8 +14,9 @@ function ViewModel(params) {
 
     self.select = function() {
         self.selected(this.id);
-        self.output = this;
-        self.trigger.call(this, 'ev-image-selected');
+        self.output = self.filters;
+        self.output["selected"] = this;
+        self.trigger.call(self.output, 'ev-image-selected');
     };
 
     self.trigger = function (id) {
@@ -41,7 +42,7 @@ ViewModel.prototype._compute = function() {
         this._computing.cancel();
     }
     var self = this;
-    this._computing = this._repository.find(this.filters['campaign']).then(function (items) {
+    this._computing = this._repository.find(this.filters['id']).then(function (items) {
         self.selected(undefined);
         items = items['images'];
         if (items.length) {
@@ -61,7 +62,9 @@ ViewModel.prototype._compute = function() {
 ViewModel.prototype.init = function (options) {
     options = options || {};
     this.output = undefined;
-    this.filters = options.input || {};
+    this.filters = options || {};
+    console.log("in list");
+    console.log(options);
     this.status('ready');
     var self = this;
     this._initializing = new Promise(function (resolve) {

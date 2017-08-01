@@ -6,19 +6,19 @@ var ko = require('knockout');
 function ViewModel(params) {
     var self = this;
     self.context = params.context;
+    self.campaign = ko.observable({});
 
     self.init = function (options) {
         options = options || {};
+        self.output = options.input;
+        self.campaign(options.input.campaign);
         self.children.forEach(function (child){
-            if (child === options.mask) {
-                return;
-            }
-            self.context.vms[child].init(options);
+            self.context.vms[child].init(self.output);
         });
     };
 
     self.trigger = function (id) {
-        self.context.events[id](self.context);
+        self.context.events[id](self.context, self.output);
     };
 }
 

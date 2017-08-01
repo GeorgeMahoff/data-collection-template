@@ -5,12 +5,20 @@ exports.createEvent = function () { // add "options" parameter if needed
     return function (context, data) {
 
         data = data || {};
-        console.log("Inside event");
-        console.log(data);
-        var packet = {
-            'campaign' : data['image']
-        };
-        console.log(packet);
+
+        var packet = {};
+        if (data['campaign']) {
+            packet = data;
+        } else {
+            packet = {
+                'campaign': {
+                    'name': data['name'],
+                    'status': data['status'],
+                    'id': data['id']
+                },
+                'id' : data['image']
+            };
+        }
 
         if (!context.vms['vc-mainapp']) {
             context.top.active('vc-mainapp');
@@ -29,6 +37,5 @@ exports.createEvent = function () { // add "options" parameter if needed
             context.vms['vc-image-list'].init({mask: 'list-image', input: packet});
         }
 
-        // context.vms['list-image'].init({input: packet});
     };
 };

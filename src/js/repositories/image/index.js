@@ -26,7 +26,7 @@ Repository.prototype.insert = function (parameters) {
     fd.append("file", image);
 
     return Promise.resolve($.ajax({
-        url: window.remoteURL+parameters['url'],
+        url: window.remoteURL+parameters['id'],
         type: 'POST',
         headers: {
             "Authorization" : "APIToken " + $.cookie('token')

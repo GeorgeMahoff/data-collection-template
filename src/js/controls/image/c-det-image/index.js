@@ -10,9 +10,10 @@ function ViewModel(params) {
     self.context = params.context;
     self.status = ko.observable('');
     self.item = ko.observable(undefined);
+    self.camStatus = ko.observable(undefined);
 
     self.trigger = function (id) {
-        self.context.events[id](self.context, self.item());
+        self.context.events[id](self.context, self.output);
     };
 }
 
@@ -37,7 +38,6 @@ ViewModel.prototype._compute = function() {
     }
     var self = this;
     this._computing = this._repository.findById(this.filters.id, this.fields).then(function (item) {
-        self.output = item;
         item["canonical"]=window.remoteURL+item['canonical'];
         self.item(item);
         self.status('computed');
@@ -49,17 +49,20 @@ ViewModel.prototype.deleteImage = function() {
     var self = this;
     console.log(self.item());
     this._repository.delete(self.item().id).then(function () {
-        var packet = {
-            'image': self.item().id.cutURLTail()
-        };
-        self.context.events['ev-campaign-images'](self.context, packet);
+        self.context.events['ev-campaign-images'](self.context, self.output);
     });
 };
 
 ViewModel.prototype.init = function (options) {
     options = options || {};
-    this.output = undefined;
-    this.filters = options.input || {};
+    this.output = {
+        id: options.id,
+        campaign: options.campaign
+    };
+    console.log("det");
+    console.log(options);
+    this.camStatus(options.campaign.status === "ready");
+    this.filters = options.selected || {};
     this.status('ready');
     var self = this;
     this._initializing = new Promise(function (resolve) {

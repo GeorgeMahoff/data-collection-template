@@ -9,16 +9,19 @@ function ViewModel(params) {
 
     self.init = function (options) {
         options = options || {};
+        console.log("vs");
+        console.log(options);
+        self.output = {
+            id: options.input.id,
+            campaign: options.input.campaign
+        };
         self.children.forEach(function (child){
-            if (child === options.mask) {
-                return;
-            }
-            self.context.vms[child].init(options);
+            self.context.vms[child].init(options.input);
         });
     };
 
     self.trigger = function (id) {
-        self.context.events[id](self.context);
+        self.context.events[id](self.context, self.output);
     };
 }
 

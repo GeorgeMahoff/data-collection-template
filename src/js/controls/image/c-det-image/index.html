@@ -1,8 +1,11 @@
 <h3>Image details</h3>
 <dl class="dl-horizontal" data-bind="if: item">
-        <img height="200px" data-bind="attr:{src: item()['canonical']}" />
+        <img height="300px" data-bind="attr:{src: item()['canonical']}" />
 </dl>
-<div class="row">
-    <a class="col-xs-2 btn btn-primary" data-bind="click: deleteImage">Delete</a>
-    <a class="col-xs-2 btn btn-primary" data-bind="click: trigger.bind($data, 'ev-to-image-statistic')">statistics</a>
+<div class="container">
+    <div class="row" data-bind="if: camStatus">
+        <a class="col-xs-2 btn btn-primary" data-bind="visible: camStatus, click: deleteImage">Delete</a>
+        <a class="col-xs-2 btn btn-primary" data-bind="click: trigger.bind($data, 'ev-to-image-statistic')">statistics</a>
+    </div>
 </div>
+

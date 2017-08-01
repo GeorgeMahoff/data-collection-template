@@ -16,6 +16,7 @@ function ViewModel(params) {
 
     self.onUpload = function (vm, evt) {
         self.output['image'] = evt.target.files[0];
+        console.log(self.output);
     };
 }
 
@@ -27,9 +28,8 @@ ViewModel.prototype.waitForStatusChange = function () {
 };
 
 ViewModel.prototype._compute = function () {
-    this.output = {
-        'url': this.input['url']
-    };
+    console.log("ROCCO");
+    this.output = this.input;
     this.status('computed');
 };
 
@@ -37,7 +37,8 @@ ViewModel.prototype._compute = function () {
 ViewModel.prototype.init = function (options) {
     options = options || {};
     this.output = undefined;
-    this.input = options.input || {};
+    console.log(options);
+    this.input = options || {};
     this.status('ready');
     var self = this;
     this._initializing = new Promise(function (resolve) {
@@ -54,7 +55,8 @@ ViewModel.prototype.uploadImage = function() {
     console.log(self.output);
     this._repository.insert(self.output).then(function () {
         var packet = {
-            'image': self.output['url']
+            id: self.output.id,
+            campaign: self.output.campaign
         };
         self.context.events['ev-campaign-images'](self.context, packet);
     });

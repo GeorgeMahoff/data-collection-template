@@ -22,9 +22,8 @@ exports.createEvent = function () { // add "options" parameter if needed
         }
 
         data = data || {};
-        var packet = {
-            'id' : data['id']
-        };
+        var id  = data.campaign ? data.campaign.id : data.id;
+        var packet = { 'id' : id };
         context.vms['det-campaign'].init({input: packet});
     };
 };
