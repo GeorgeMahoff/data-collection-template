@@ -3,13 +3,7 @@
 
 var Promise = require('bluebird');
 
-function Action() { // add "options" parameters if needed
-    // TODO: Global Initialization
-    /*
-    example:
-    this.collection = options.repositories.mail;
-    */
-}
+function Action() {}
 Action.prototype.run = function (parameters, solve) { // add "onCancel" parameters if needed
     // Parameters:
 

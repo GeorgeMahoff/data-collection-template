@@ -3,17 +3,10 @@
 
 var Promise = require('bluebird');
 
-function Action() { // add "options" parameters if needed
-    // TODO: Global Initialization
-    /*
-    example:
-    this.collection = options.repositories.mail;
-    */
-}
+function Action() {}
 Action.prototype.run = function (parameters, solve) {
 
     var formJson = JSON.stringify(parameters);
-    console.log(parameters);
 
     $.ajax({
         url: window.remoteURL+'/api/user/me',
@@ -24,7 +17,6 @@ Action.prototype.run = function (parameters, solve) {
         },
         data: formJson,
         success: function(data) {
-            console.log(data);
             $.notify({message: 'Update successful!'}, {allow_dismiss: true, type: 'success'});
             solve({
                 event: 'ev-user-update-success', // success

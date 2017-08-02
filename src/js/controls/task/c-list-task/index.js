@@ -43,6 +43,7 @@ ViewModel.prototype._compute = function() {
     var self = this;
     this._computing = this._repository.find(this.filters, this.fields).then(function (items) {
         self.selected(undefined);
+        items = items['tasks'];
         self.items(items);
         if (items.length) {
             self.selected(items[0].id);
