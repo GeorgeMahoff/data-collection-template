@@ -47,7 +47,6 @@ ViewModel.prototype._compute = function() {
 
 ViewModel.prototype.deleteImage = function() {
     var self = this;
-    console.log(self.item());
     this._repository.delete(self.item().id).then(function () {
         self.context.events['ev-campaign-images'](self.context, self.output);
     });
@@ -59,8 +58,6 @@ ViewModel.prototype.init = function (options) {
         id: options.id,
         campaign: options.campaign
     };
-    console.log("det");
-    console.log(options);
     this.camStatus(options.campaign.status === "ready");
     this.filters = options.selected || {};
     this.status('ready');

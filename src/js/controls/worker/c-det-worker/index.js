@@ -10,9 +10,10 @@ function ViewModel(params) {
     self.context = params.context;
     self.status = ko.observable('');
     self.item = ko.observable(undefined);
+    self.camStatus = ko.observable(undefined);
 
     self.trigger = function (id) {
-        self.context.events[id](self.context, self.item());
+        self.context.events[id](self.context, self.output);
     };
 }
 
@@ -34,8 +35,25 @@ ViewModel.prototype.waitForStatusChange = function () {
            Promise.resolve();
 };
 
-ViewModel.prototype.switchTaskState = function(isSelection) {
-    console.log(isSelection);
+ViewModel.prototype.switchSelectionState = function() {
+    var self = this;
+    var url = self.item()['selection'];
+
+    var action = self.item()['selector']==='Yes' ? self._repository.disableForTask : self._repository.enableForTask;
+
+    action(url).then(function () {
+        self.trigger('ev-list-worker');
+    })
+};
+
+ViewModel.prototype.switchAnnotationState = function() {
+    var self = this;
+    var url = self.item()['annotation'];
+    var action = self.item()['annotator']==='Yes' ? self._repository.disableForTask : self._repository.enableForTask;
+
+    action(url).then(function () {
+        self.trigger('ev-list-worker');
+    })
 };
 
 ViewModel.prototype._compute = function() {
@@ -48,7 +66,6 @@ ViewModel.prototype._compute = function() {
         item['selector'] = item['selector']? "Yes" : "No";
         item['annotatorButton'] = item['annotator']? "Disable for " : "Enable for ";
         item['annotator'] = item['annotator']? "Yes" : "No";
-        self.output = item;
         self.item(item);
         self.status('computed');
         self._computing = undefined;
@@ -58,8 +75,9 @@ ViewModel.prototype._compute = function() {
 
 ViewModel.prototype.init = function (options) {
     options = options || {};
-    this.output = undefined;
-    this.filters = options.input || {};
+    this.output = options;
+    this.filters = options.selected || {};
+    this.camStatus = options.campaign.status;
     this.status('ready');
     var self = this;
     this._initializing = new Promise(function (resolve) {

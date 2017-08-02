@@ -4,7 +4,8 @@
 exports.createEvent = function () { // add "options" parameter if needed
     return function (context, data) {
 
-        console.log(data);
+        data = data || {};
+        var packet = data;
 
         if (!context.vms['vc-mainapp']) {
             context.top.active('vc-mainapp');
@@ -18,14 +19,9 @@ exports.createEvent = function () { // add "options" parameter if needed
             context.vms['xor-authed-role-block'].active('vc-manager-body');
             context.vms['vc-manager-body'].init({mask: 'xor-manager-workflow'});
         }
-        if (!context.vms['vc-worker-details']) {
+
             context.vms['xor-manager-workflow'].active('vc-worker-details');
-            context.vms['vc-worker-details'].init({mask: 'det-worker'});
-        }
-        data = data || {};
-        var packet = {
-            'id' : data['id']
-        };
-        context.vms['det-worker'].init({input: packet});
+            context.vms['vc-worker-details'].init({mask: 'det-worker', input: packet});
+
     };
 };

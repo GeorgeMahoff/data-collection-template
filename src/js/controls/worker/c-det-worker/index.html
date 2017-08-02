@@ -6,9 +6,9 @@
     <dd data-bind="text: item()['annotator']"></dd>
     <dt>Selector?</dt>
     <dd data-bind="text: item()['selector']"></dd>
-    <div class="row">
-        <a class="col-xs-2 btn btn-primary" data-bind="click: switchTaskState(false), text: item()['annotatorButton']+'annotation'" ></a>
-        <a class="col-xs-2 btn btn-primary" data-bind="click: switchTaskState(true), text: item()['selectorButton']+'selection'"></a>
+    <div data-bind="if: camStatus === 'ready'">
+        <a class="col-xs-2 btn btn-primary" data-bind="click: switchSelectionState, text: item()['selectorButton']+'selection'"></a>
+        <a class="col-xs-2 btn btn-primary" data-bind="click: switchAnnotationState, text: item()['annotatorButton']+'annotation'" ></a>
     </div>
 </dl>
 

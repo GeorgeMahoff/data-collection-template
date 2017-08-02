@@ -6,11 +6,11 @@ var ko = require('knockout');
 function ViewModel(params) {
     var self = this;
     self.context = params.context;
+    self.campaign = ko.observable({});
 
     self.init = function (options) {
         options = options || {};
-        console.log("vs");
-        console.log(options);
+        self.campaign(options.input.campaign);
         self.output = {
             id: options.input.id,
             campaign: options.input.campaign

@@ -6,17 +6,20 @@ var ko = require('knockout');
 function ViewModel(params) {
     var self = this;
     self.context = params.context;
+    self.campaign = ko.observable({});
 
     self.init = function (options) {
+        var self = this;
         options = options || {};
-        this.output = options.input['worker'];
+        self.output = options.input;
+        self.campaign(options.input.campaign);
         self.children.forEach(function (child){
-            self.context.vms[child].init(options);
+            self.context.vms[child].init(self.output);
         });
     };
 
     self.trigger = function (id) {
-        self.context.events[id](self.context);
+        self.context.events[id](self.context, this.output);
     };
 }
 

@@ -1,5 +1,5 @@
 <h3>Account edit</h3>
-<form>
+<form data-bind="submit: trigger.bind($data, 'ev-user-update-submit')">
     <div class="form-group" data-bind="css: {'has-error': errors()['fullname']}">
         <label for="form-user-edit_field_0" data-bind="css: {active: fields()['fullname']}, attr: {'data-error': errors()['fullname']}" class="control-label">Your new full name</label>
         <input id="form-user-edit_field_0" data-bind="value: fields()['fullname']" type="text" class="form-control validate" aria-describedby="form-user-edit_field_0_error">
@@ -10,7 +10,8 @@
         <input id="form-user-edit_field_1" data-bind="value: fields()['password']" type="password" class="form-control validate" aria-describedby="form-user-edit_field_1_error">
         <span id="form-user-edit_field_1_error" class="help-block" data-bind="text: errors()['password']"></span>
     </div>
+    <button type="submit" class="btn btn-primary col-xs-2">
+        Submit
+    </button>
 </form>
-<div class="row">
-    <a class="col-xs-2 btn btn-primary" data-bind="click: trigger.bind($data, 'ev-user-update-submit')">submit</a>
-</div>
+

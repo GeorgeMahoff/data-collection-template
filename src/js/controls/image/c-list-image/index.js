@@ -63,8 +63,6 @@ ViewModel.prototype.init = function (options) {
     options = options || {};
     this.output = undefined;
     this.filters = options || {};
-    console.log("in list");
-    console.log(options);
     this.status('ready');
     var self = this;
     this._initializing = new Promise(function (resolve) {

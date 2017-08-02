@@ -14,8 +14,9 @@ function ViewModel(params) {
 
     self.select = function() {
         self.selected(this.id);
-        self.output = this;
-        self.trigger.call(this, 'ev-list-worker');
+        self.output = self.filters;
+        self.output["selected"] = this;
+        self.trigger.call(self.output, 'ev-list-worker');
     };
 
     self.trigger = function (id) {
@@ -43,9 +44,7 @@ ViewModel.prototype._compute = function() {
         this._computing.cancel();
     }
     var self = this;
-    console.log('inside workers compute');
-    console.log(this.filters['worker']);
-    this._computing = this._repository.find(this.filters['worker']).then(function (items) {
+    this._computing = this._repository.find(this.filters['id']).then(function (items) {
         self.selected(undefined);
         items = items['workers'];
         if (items.length) {
@@ -66,7 +65,7 @@ ViewModel.prototype._compute = function() {
 ViewModel.prototype.init = function (options) {
     options = options || {};
     this.output = undefined;
-    this.filters = options.input || {};
+    this.filters = options || {};
     this.status('ready');
     var self = this;
     this._initializing = new Promise(function (resolve) {
