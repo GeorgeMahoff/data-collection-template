@@ -1,11 +1,13 @@
-<h3>Task</h3>
+<h3>Task details</h3>
 <dl class="dl-horizontal" data-bind="if: item">
-        <dt>id</dt>
-        <dd data-bind="text: item()['id']"></dd>
-        <dt>type</dt>
-        <dd data-bind="text: item()['type']"></dd>
+        <dt>Campaign</dt>
+        <dd data-bind="text: item()['campaign']"></dd>
+        <dt>Type</dt>
+        <dd data-bind="text: item()['type'].toProperCase()"></dd>
 </dl>
-<div class="row">
-    <a class="col-xs-2 btn btn-primary" data-bind="click: trigger.bind($data, 'ev-task-session')">session</a>
-    <a class="col-xs-2 btn btn-primary" data-bind="click: trigger.bind($data, 'ev-task-statistic')">statistic</a>
+<div class="container">
+    <div class="row">
+        <a class="col-xs-2 btn btn-primary" data-bind="click: trigger.bind($data, 'ev-task-session')">Start session</a>
+        <a class="col-xs-2 btn btn-primary" data-bind="click: trigger.bind($data, 'ev-task-statistic')">Open statistic</a>
+    </div>
 </div>

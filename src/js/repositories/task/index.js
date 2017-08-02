@@ -10,7 +10,13 @@ function Repository(options) {
 }
 
 Repository.prototype.findById = function (id) {
-    return 1;
+    return Promise.resolve($.ajax({
+        url: window.remoteURL + id,
+        type: 'GET',
+        headers: {
+            "Authorization" : "APIToken " + $.cookie("token")
+        }
+    }));
 };
 
 Repository.prototype.find = function () {

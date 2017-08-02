@@ -25,11 +25,6 @@ function ViewModel(params) {
 
 ViewModel.prototype.id = 'list-task';
 
-ViewModel.prototype.fields = {
-    id: 1
-    ,'type': 1
-};
-
 ViewModel.prototype.waitForStatusChange = function () {
     return this._computing ||
            this._initializing ||
@@ -41,24 +36,48 @@ ViewModel.prototype._compute = function() {
         this._computing.cancel();
     }
     var self = this;
-    this._computing = this._repository.find(this.filters, this.fields).then(function (items) {
+    this._computing = this._repository.find().then(function (items) {
         self.selected(undefined);
-        items = items['tasks'];
-        self.items(items);
-        if (items.length) {
-            self.selected(items[0].id);
-            self.output = items[0];
+        console.log(items);
+        var tasks = items['tasks'];
+
+        // self.items(items);
+        // console.log(self.items());
+        // if (items.length) {
+        //     self.selected(items[0].id);
+        //     self.output = items[0];
+        // }
+        // self.status('computed');
+        // self._computing = undefined;
+        if (tasks.length) {
+            Promise.resolve(
+                tasks.forEach(function (i) {
+                    console.log(i);
+                    self._repository.findById(i.id).then(function (detail) {
+                        var update = ko.observable(
+                            {
+                                id: detail.id,
+                                campaign: detail.campaign,
+                                type: detail.type
+                            });
+                        self.items.push(update);
+                    })
+                })
+            ).then(function () {
+
+                    // self.selected(items[0].id);
+                    // self.output = items[0];
+
+                self.status('computed');
+                self._computing = undefined;
+            });
         }
-        self.status('computed');
-        self._computing = undefined;
     });
 };
 
 
-ViewModel.prototype.init = function (options) {
-    options = options || {};
+ViewModel.prototype.init = function () {
     this.output = undefined;
-    this.filters = options.input || {};
     this.status('ready');
     var self = this;
     this._initializing = new Promise(function (resolve) {

@@ -20,7 +20,6 @@ ViewModel.prototype.id = 'det-task';
 
 ViewModel.prototype.fields = {
     id: 1
-    ,'id': 1
     ,'type': 1
 };
 
@@ -38,6 +37,7 @@ ViewModel.prototype._compute = function() {
     var self = this;
     this._computing = this._repository.findById(this.filters.id, this.fields).then(function (item) {
         self.output = item;
+        console.log(item);
         self.item(item);
         self.status('computed');
         self._computing = undefined;
