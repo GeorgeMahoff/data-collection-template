@@ -6,26 +6,27 @@ var ko = require('knockout');
 function ViewModel(params) {
     var self = this;
     self.context = params.context;
+    self.active = ko.observable(undefined);
 
     self.init = function (options) {
         options = options || {};
-        self.children.forEach(function (child){
-            if (child === options.mask) {
-                return;
-            }
-            self.context.vms[child].init(options);
-        });
+        self.active(self.defaultChild);
+        if (self.defaultChild && options.mask !== self.defaultChild) {
+            self.context.vms[self.defaultChild].init(options);
+        }
     };
 
+    self.landmark = function (id) {
+        self.active(id);
+        self.context.vms[id].init();
+    };
     self.trigger = function (id) {
         self.context.events[id](self.context);
     };
 }
 
 ViewModel.prototype.id = 'vc-task-session';
-ViewModel.prototype.children = [
-    'form-task-submit' // taskSubmit
-];
+ViewModel.prototype.defaultChild = 'form-annotation-session';
 
 exports.register = function () {
     ko.components.register('c-vc-task-session', {
@@ -37,7 +38,7 @@ exports.register = function () {
                 ko.utils.domNodeDisposal.addDisposeCallback(componentInfo.element, function () {
                     params.context.runningActionsByContainer[vm.id].forEach(function (promise) {
                         promise.cancel();
-                    })
+                    });
                     delete params.context.runningActionsByContainer[vm.id];
                     delete params.context.vms[vm.id];
                 });

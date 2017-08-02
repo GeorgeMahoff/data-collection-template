@@ -1,4 +1,8 @@
 <span>
-    <!-- taskSubmit -->
-    <c-form-task-submit params="context: context"></c-form-task-submit>
+    <!-- ko if: active() === 'form-selection-session' -->
+    <c-form-selection-session params="context: context"></c-form-selection-session>
+    <!-- /ko -->
+    <!-- ko if: active() === 'form-annotation-session' -->
+    <c-form-annotation-session params="context: context"></c-form-annotation-session>
+    <!-- /ko -->
 </span>

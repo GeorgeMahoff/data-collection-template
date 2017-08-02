@@ -6,51 +6,57 @@ var ko = require('knockout'),
 
 function ViewModel(params) {
     var self = this;
-    self._repository = params.context.repositories['taskstat'];
     self.context = params.context;
     self.status = ko.observable('');
-    self.item = ko.observable(undefined);
+    self.fields = ko.observable({});
+    self.errors = ko.observable({});
 
     self.trigger = function (id) {
-        self.context.events[id](self.context, self.item());
+        self.context.events[id](self.context, self.output);
     };
 }
 
-ViewModel.prototype.id = 'det-task-stat';
-
-ViewModel.prototype.fields = {
-    id: 1
-    ,'accepted': 1
-    ,'annotated': 1
-    ,'available': 1
-    ,'rejected': 1
-};
+ViewModel.prototype.id = 'form-selection-session';
 
 ViewModel.prototype.waitForStatusChange = function () {
-    return this._computing ||
-           this._initializing ||
+    return this._initializing ||
            Promise.resolve();
 };
 
-
-ViewModel.prototype._compute = function() {
-    if (this._computing) {
-        this._computing.cancel();
+ViewModel.prototype._compute = function () {
+    this.output = {
+        'accepted': this.input['accepted'],
+        'skyline': this.input['skyline'],
     }
-    var self = this;
-    this._computing = this._repository.findById(this.filters.id, this.fields).then(function (item) {
-        self.output = item;
-        self.item(item);
-        self.status('computed');
-        self._computing = undefined;
+    var self = this,
+        fields = {
+            'accepted': ko.observable(this.input['accepted']),
+            'skyline': ko.observable(this.input['skyline']),
+        },
+        errors = {
+            'accepted': ko.observable(this.input['accepted-error']),
+            'skyline': ko.observable(this.input['skyline-error']),
+        };
+    fields['accepted'].subscribe(function (value) {
+        self.output['accepted'] = value;
+        self.errors()['accepted'](undefined);
     });
+    fields['skyline'].subscribe(function (value) {
+        self.output['skyline'] = value;
+        self.errors()['skyline'](undefined);
+    });
+    this.fields(fields);
+    this.errors(errors);
+    this.status('computed');
 };
 
 
 ViewModel.prototype.init = function (options) {
     options = options || {};
     this.output = undefined;
-    this.filters = options.input || {};
+    this.fields({});
+    this.errors({});
+    this.input = options.input || {};
     this.status('ready');
     var self = this;
     this._initializing = new Promise(function (resolve) {
@@ -63,7 +69,7 @@ ViewModel.prototype.init = function (options) {
 };
 
 exports.register = function () {
-    ko.components.register('c-det-task-stat', {
+    ko.components.register('c-form-selection-session', {
         viewModel: {
             createViewModel: function (params, componentInfo) {
                 var vm = new ViewModel(params);

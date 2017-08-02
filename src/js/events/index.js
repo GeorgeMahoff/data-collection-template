@@ -14,7 +14,6 @@ exports.createEvents = function (options) {
         ,'ev-edit-account': require('./auth/ev-edit-account').createEvent(options)
         ,'ev-list-task-selected': require('./task/ev-list-task-selected').createEvent(options)
         ,'ev-task-session': require('./task/ev-task-session').createEvent(options)
-        ,'ev-task-statistic': require('./task/ev-task-statistic').createEvent(options)
         ,'ev-signup-submit': require('./auth/ev-signup-submit').createEvent(options)
         ,'ev-to-upload-image': require('./image/ev-to-upload-image').createEvent(options)
         ,'ev-to-image-statistic': require('./image/ev-to-image-statistic').createEvent(options)
@@ -28,10 +27,6 @@ exports.createEvents = function (options) {
         ,'ev-login-success': require('./auth/ev-login-success').createEvent(options)
         ,'ev-login-form-submit': require('./auth/ev-login-form-submit').createEvent(options)
         ,'ev-register-success': require('./auth/ev-register-success').createEvent(options)
-        ,'ev-submit-result-failure': require('./task/ev-submit-result-failure').createEvent(options)
-        ,'ev-submit-result-success': require('./task/ev-submit-result-success').createEvent(options)
-        ,'ev-start-session-success': require('./task/ev-start-session-success').createEvent(options)
-        ,'ev-start-session-failure': require('./task/ev-start-session-failure').createEvent(options)
         ,'ev-task-submit': require('./task/ev-task-submit').createEvent(options)
     };
 };

@@ -29,4 +29,14 @@ Repository.prototype.find = function () {
     }));
 };
 
+Repository.prototype.getStatistic = function (statisticURL) {
+    return Promise.resolve($.ajax({
+        url: window.remoteURL + statisticURL,
+        type: 'GET',
+        headers: {
+            "Authorization" : "APIToken " + $.cookie("token")
+        }
+    }));
+};
+
 exports.createRepository = Repository;

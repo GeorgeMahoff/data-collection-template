@@ -38,21 +38,11 @@ ViewModel.prototype._compute = function() {
     var self = this;
     this._computing = this._repository.find().then(function (items) {
         self.selected(undefined);
-        console.log(items);
         var tasks = items['tasks'];
 
-        // self.items(items);
-        // console.log(self.items());
-        // if (items.length) {
-        //     self.selected(items[0].id);
-        //     self.output = items[0];
-        // }
-        // self.status('computed');
-        // self._computing = undefined;
         if (tasks.length) {
             Promise.resolve(
                 tasks.forEach(function (i) {
-                    console.log(i);
                     self._repository.findById(i.id).then(function (detail) {
                         var update = ko.observable(
                             {
@@ -64,10 +54,6 @@ ViewModel.prototype._compute = function() {
                     })
                 })
             ).then(function () {
-
-                    // self.selected(items[0].id);
-                    // self.output = items[0];
-
                 self.status('computed');
                 self._computing = undefined;
             });

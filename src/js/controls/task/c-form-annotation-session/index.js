@@ -16,7 +16,7 @@ function ViewModel(params) {
     };
 }
 
-ViewModel.prototype.id = 'form-task-submit';
+ViewModel.prototype.id = 'form-annotation-session';
 
 ViewModel.prototype.waitForStatusChange = function () {
     return this._initializing ||
@@ -69,7 +69,7 @@ ViewModel.prototype.init = function (options) {
 };
 
 exports.register = function () {
-    ko.components.register('c-form-task-submit', {
+    ko.components.register('c-form-annotation-session', {
         viewModel: {
             createViewModel: function (params, componentInfo) {
                 var vm = new ViewModel(params);

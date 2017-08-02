@@ -1,13 +1,19 @@
 <h3>Task details</h3>
-<dl class="dl-horizontal" data-bind="if: item">
+<div class="container">
+    <dl class="dl-horizontal col-xs-9" data-bind="if: item">
         <dt>Campaign</dt>
         <dd data-bind="text: item()['campaign']"></dd>
         <dt>Type</dt>
         <dd data-bind="text: item()['type'].toProperCase()"></dd>
-</dl>
-<div class="container">
-    <div class="row">
-        <a class="col-xs-2 btn btn-primary" data-bind="click: trigger.bind($data, 'ev-task-session')">Start session</a>
-        <a class="col-xs-2 btn btn-primary" data-bind="click: trigger.bind($data, 'ev-task-statistic')">Open statistic</a>
+    </dl>
+    <ul class="list-group col-xs-3 pull-right raised-statistic" data-bind="if: statistics">
+        <li class="list-group-item active text-center">Statistics</li>
+        <li data-bind="visible: statistics()['available']>=0, text: 'Available: '+statistics()['available']" class="list-group-item text-center"></li>
+        <li data-bind="visible: statistics()['annotated']>=0, text: 'Annotated: '+statistics()['annotated']" class="list-group-item text-center"></li>
+        <li data-bind="visible: statistics()['accepted']>=0, text: 'Accepted: '+statistics()['accepted']" class="list-group-item text-center"></li>
+        <li data-bind="visible: statistics()['rejected']>=0, text: 'Rejected: '+statistics()['rejected']" class="list-group-item text-center"></li>
+    </ul>
+    <div class="row" data-bind="if: statistics">
+        <button class="col-xs-2 btn btn-primary" data-bind="enable: statistics()['available']>0, click: trigger.bind($data, 'ev-task-session')">Start session</button>
     </div>
 </div>

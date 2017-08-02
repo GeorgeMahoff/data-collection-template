@@ -10,6 +10,7 @@ function ViewModel(params) {
     self.context = params.context;
     self.status = ko.observable('');
     self.item = ko.observable(undefined);
+    self.statistics = ko.observable(undefined);
 
     self.trigger = function (id) {
         self.context.events[id](self.context, self.item());
@@ -37,10 +38,12 @@ ViewModel.prototype._compute = function() {
     var self = this;
     this._computing = this._repository.findById(this.filters.id, this.fields).then(function (item) {
         self.output = item;
-        console.log(item);
         self.item(item);
-        self.status('computed');
-        self._computing = undefined;
+        self._repository.findById(item.statistics).then(function (stat) {
+            self.statistics(stat);
+            self.status('computed');
+            self._computing = undefined;
+        });
     });
 };
 
