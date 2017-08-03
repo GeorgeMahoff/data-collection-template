@@ -28,14 +28,12 @@ exports.register = function () {
     require('./c-vc-manager-body').register();
     require('./c-xor-manager-workflow').register();
     require('./campaign/c-vc-add-campaign').register();
-    require('./campaign/c-vc-campaign-statistic').register();
     require('./image/c-vc-image-details').register();
     require('./image/c-vc-image-list').register();
     require('./image/c-vc-image-upload').register();
     require('./worker/c-vc-worker-list').register();
     require('./image/c-vc-image-stat').register();
     require('./campaign/c-form-new-campaign').register();
-    require('./campaign/c-det-campaign-stat').register();
     require('./image/c-det-image').register();
     require('./image/c-list-image').register();
     require('./image/c-form-image-upload').register();

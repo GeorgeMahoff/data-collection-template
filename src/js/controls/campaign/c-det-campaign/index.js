@@ -10,6 +10,7 @@ function ViewModel(params) {
     self.context = params.context;
     self.status = ko.observable('');
     self.item = ko.observable(undefined);
+    self.statistics = ko.observable(undefined);
 
     self.trigger = function (id) {
         self.context.events[id](self.context, self.item());
@@ -17,19 +18,6 @@ function ViewModel(params) {
 }
 
 ViewModel.prototype.id = 'det-campaign';
-
-ViewModel.prototype.fields = {
-    id: 1
-    ,'annotation_replica': 1
-    ,'annotation_size': 1
-    ,'images': 1
-    ,'name': 1
-    ,'selection_replica': 1
-    ,'statistic': 1
-    ,'status': 1
-    ,'threshold': 1
-    ,'workers': 1
-};
 
 ViewModel.prototype.waitForStatusChange = function () {
     return this._computing ||
@@ -58,10 +46,20 @@ ViewModel.prototype._compute = function() {
         this._computing.cancel();
     }
     var self = this;
-    this._computing = this._repository.findById(this.filters.id, this.fields).then(function (item) {
+    this._computing = this._repository.findById(this.filters.id).then(function (item) {
         self.item(item);
-        self.status('computed');
-        self._computing = undefined;
+        console.log(item);
+        if(item.status === 'ended') {
+            self._repository.getStatistic(item.statistics).then(function (stat) {
+                console.log(stat);
+                self.statistics(stat);
+                self.status('computed');
+                self._computing = undefined;
+            })
+        } else {
+            self.status('computed');
+            self._computing = undefined;
+        }
     });
 };
 

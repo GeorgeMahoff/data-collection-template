@@ -21,12 +21,10 @@ exports.createEvents = function (options) {
         ,'ev-list-worker': require('./worker/ev-list-worker').createEvent(options)
         ,'ev-create-new-campaign': require('./campaign/ev-create-new-campaign').createEvent(options)
         ,'ev-list-campaign-selected': require('./campaign/ev-list-campaign-selected').createEvent(options)
-        ,'ev-campaign-statistic': require('./campaign/ev-campaign-statistic').createEvent(options)
         ,'ev-campaign-images': require('./image/ev-campaign-images').createEvent(options)
         ,'ev-campaign-workers': require('./worker/ev-campaign-workers').createEvent(options)
         ,'ev-login-success': require('./auth/ev-login-success').createEvent(options)
         ,'ev-login-form-submit': require('./auth/ev-login-form-submit').createEvent(options)
         ,'ev-register-success': require('./auth/ev-register-success').createEvent(options)
-        ,'ev-task-submit': require('./task/ev-task-submit').createEvent(options)
     };
 };

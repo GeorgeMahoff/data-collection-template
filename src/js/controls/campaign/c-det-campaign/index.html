@@ -1,40 +1,37 @@
-<div data-bind="if: item">
-    <h3>Details</h3>
-    <dl class="dl-horizontal">
+<h3>Details</h3>
+<div class="container" data-bind="if: item">
+    <dl class="dl-horizontal col-xs-9">
         <dt>Campaign name</dt>
         <dd data-bind="text: item()['name']"></dd>
         <dt>Current status</dt>
         <dd data-bind="text: item()['status'].toProperCase()"></dd>
-
         <dt>Minimum for selection</dt>
         <dd data-bind="text: item()['selection_replica']"></dd>
-
         <dt>Minimum for annotation</dt>
         <dd data-bind="text: item()['annotation_replica']"></dd>
-
         <dt>Minimum of positive results</dt>
         <dd data-bind="text: item()['threshold']"></dd>
-
         <dt>Annotation line width</dt>
         <dd data-bind="text: item()['annotation_size']"></dd>
     </dl>
-    <div class="container">
-        <div class="row">
-            <div data-bind="visible: item()['status']==='ready'">
-                <a class="col-xs-2 btn btn-primary" data-bind="visible: item()['status']==='ready', click: startCampaign">Start</a>
-                <a class="col-xs-2 btn btn-primary" data-bind="visible: item()['status']==='ready', click: trigger.bind($data, 'ev-edit-campaign')">Edit</a>
-            </div>
-            <div data-bind="visible: item()['status']==='started'">
-                <a class="col-xs-2 btn btn-primary" data-bind="click: stopCampaign">Stop</a>
-            </div>
-            <div data-bind="visible: item()['status']==='ended'">
-                <a class="col-xs-2 btn btn-primary" data-bind="click: trigger.bind($data, 'ev-campaign-statistic')">Statistics</a>
-            </div>
+    <ul class="list-group col-xs-3 pull-right raised-statistic" data-bind="if: statistics">
+        <li class="list-group-item active text-center">Statistics</li>
+        <li data-bind="visible: statistics()['images']>=0, text: 'Image: '+statistics()['images']" class="list-group-item text-center"></li>
+        <li data-bind="visible: statistics()['annotation']>=0, text: 'Annotated: '+statistics()['annotation']" class="list-group-item text-center"></li>
+        <li data-bind="visible: statistics()['accepted']>=0, text: 'Accepted: '+statistics()['accepted']" class="list-group-item text-center"></li>
+        <li data-bind="visible: statistics()['rejected']>=0, text: 'Rejected: '+statistics()['rejected']" class="list-group-item text-center"></li></ul>
+    <div class="row">
+        <div data-bind="visible: item()['status']==='ready'">
+            <a class="col-xs-2 btn btn-primary" data-bind="visible: item()['status']==='ready', click: startCampaign">Start</a>
+            <a class="col-xs-2 btn btn-primary" data-bind="visible: item()['status']==='ready', click: trigger.bind($data, 'ev-edit-campaign')">Edit</a>
         </div>
-        <div class="row">
-            <a class="col-xs-2 btn btn-primary" data-bind="click: trigger.bind($data, 'ev-campaign-images')">Images</a>
-            <a class="col-xs-2 btn btn-primary" data-bind="click: trigger.bind($data, 'ev-campaign-workers')">Workers</a>
+        <div data-bind="visible: item()['status']==='started'">
+            <a class="col-xs-2 btn btn-primary" data-bind="click: stopCampaign">Stop</a>
         </div>
+    </div>
+    <div class="row">
+        <a class="col-xs-2 btn btn-primary" data-bind="click: trigger.bind($data, 'ev-campaign-images')">Images</a>
+        <a class="col-xs-2 btn btn-primary" data-bind="click: trigger.bind($data, 'ev-campaign-workers')">Workers</a>
     </div>
 </div>
 

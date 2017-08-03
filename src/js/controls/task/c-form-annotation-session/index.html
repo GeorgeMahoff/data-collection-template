@@ -1,16 +1,11 @@
 <h3>Annotation task</h3>
-<form>
-    <div class="form-group" data-bind="css: {'has-error': errors()['accepted']}">
-        <label for="form-task-submit_field_0" data-bind="css: {active: fields()['accepted']}, attr: {'data-error': errors()['accepted']}" class="control-label">accepted</label>
-        <input id="form-task-submit_field_0" data-bind="value: fields()['accepted']" type="text" class="form-control validate" aria-describedby="form-task-submit_field_0_error">
-        <span id="form-task-submit_field_0_error" class="help-block" data-bind="text: errors()['accepted']"></span>
+<div class="row" data-bind="if: image">
+    <div class="col-xs-3">
+        <button class="col-xs-12 btn btn-success" data-bind="enable: status()==='computed' && line, click: sendResult">Send annotation</button>
+        <button class="col-xs-12 btn btn-danger" data-bind="click: clear">Clear</button>
     </div>
-    <div class="form-group" data-bind="css: {'has-error': errors()['skyline']}">
-        <label for="form-task-submit_field_1" data-bind="css: {active: fields()['skyline']}, attr: {'data-error': errors()['skyline']}" class="control-label">skyline</label>
-        <input id="form-task-submit_field_1" data-bind="value: fields()['skyline']" type="text" class="form-control validate" aria-describedby="form-task-submit_field_1_error">
-        <span id="form-task-submit_field_1_error" class="help-block" data-bind="text: errors()['skyline']"></span>
-    </div>
-</form>
-<div class="row">
-    <a class="col-xs-2 btn btn-primary" data-bind="click: trigger.bind($data, 'ev-task-submit')">submit</a>
+    <line-drawer params="src: image, pen: width, line: line"></line-drawer>
 </div>
+
+
+

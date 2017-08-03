@@ -38,9 +38,13 @@ ViewModel.prototype._compute = function() {
     }
     var self = this;
     this._computing = this._repository.findById(this.filters.id, this.fields).then(function (item) {
-        item["canonical"]=window.remoteURL+item['canonical'];
+        item['canonical']=window.remoteURL+item['canonical'];
         self.item(item);
         self.status('computed');
+        self._repository.getStatistic(item.statistics).then(function (stat) {
+            console.log("STAT")
+            console.log(stat);
+        });
         self._computing = undefined;
     });
 };

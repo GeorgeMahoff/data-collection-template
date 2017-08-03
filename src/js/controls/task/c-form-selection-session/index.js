@@ -11,8 +11,8 @@ function ViewModel(params) {
     self.image = ko.observable('');
     self.status = ko.observable('');
 
-    self.trigger = function (id, packet) {
-        self.context.events[id](self.context, packet);
+    self.trigger = function (id) {
+        self.context.events[id](self.context, self.output);
     };
 }
 
@@ -34,7 +34,7 @@ ViewModel.prototype.sendResult = function (bool) {
         'accepted': bool
     };
     self._repository.sendResult(packet, self.input.session).then(function () {
-        self.trigger('ev-task-session', self.input);
+        self.trigger('ev-task-session');
     })
 };
 
@@ -47,9 +47,13 @@ ViewModel.prototype._compute = function () {
     var self = this;
     self._repository.getNextInstance(this.input.session).then(function (item) {
         console.log(item);
-        self.image(window.remoteURL + item.image);
-        self.status('computed');
-    })
+        if (item){
+            self.image(window.remoteURL + item.image);
+            self.status('computed');
+        } else {
+            self.trigger('ev-list-task-selected')
+        }
+    });
 };
 
 ViewModel.prototype.init = function (options) {
@@ -57,6 +61,7 @@ ViewModel.prototype.init = function (options) {
     console.log(options);
     console.log(this.context);
     this.input = options;
+    this.output = this.input;
     this.status('ready');
     var self = this;
     this._initializing = new Promise(function (resolve) {

@@ -67,4 +67,14 @@ Repository.prototype.find = function (campaignId) {
     }));
 };
 
+Repository.prototype.getStatistic = function (statisticsURL) {
+    return Promise.resolve($.ajax({
+        url: window.remoteURL + statisticsURL,
+        type: 'GET',
+        headers: {
+            "Authorization" : "APIToken " + $.cookie("token")
+        }
+    }));
+};
+
 exports.createRepository = Repository;

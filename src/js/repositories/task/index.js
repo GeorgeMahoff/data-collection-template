@@ -50,13 +50,23 @@ Repository.prototype.startSession = function (taskURL) {
 };
 
 Repository.prototype.getNextInstance = function (taskURL) {
-    return Promise.resolve($.ajax({
-        url: window.remoteURL + taskURL,
-        type: 'GET',
-        headers: {
-            "Authorization": "APIToken " + $.cookie("token")
-        }
-    }));
+    return Promise.resolve(
+        Promise.resolve(
+            $.ajax({
+                url: window.remoteURL + taskURL,
+                type: 'GET',
+                headers: {
+                    "Authorization": "APIToken " + $.cookie("token")
+                }
+            }).complete(function(data) {
+                console.log("ping");
+                return data
+            })
+        ).then(function (item) {
+            return item;
+        }).catch(function () {
+            return undefined;
+        }));
 };
 
 Repository.prototype.sendResult = function (packet, taskURL) {

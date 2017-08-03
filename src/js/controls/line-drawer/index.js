@@ -84,7 +84,9 @@ function ViewModel(params) {
     self.naturalSize = ko.observable();
 }
 
-ko.components.register('line-drawer', {
-    viewModel: ViewModel,
-    template: '<img data-bind="attr: { src: src }, LineDrawNaturalSize: naturalSize" class="background" draggable="false"><canvas data-bind="LineDraw: line, LineDrawSetSize: naturalSize, LineDrawPen: pen"></canvas>'
-});
+exports.register = function () {
+    ko.components.register('line-drawer', {
+        viewModel: ViewModel,
+        template: '<img data-bind="attr: { src: src }, LineDrawNaturalSize: naturalSize" class="background" draggable="false"><canvas data-bind="LineDraw: line, LineDrawSetSize: naturalSize, LineDrawPen: pen"></canvas>'
+    });
+};
