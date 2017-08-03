@@ -4,12 +4,11 @@
 exports.createEvent = function () { // add "options" parameter if needed
     return function (context, data) {
 
-        console.log(data);
-
         data = data || {};
         var packet = {
             'id' : data['id'],
-            'session': data['session']
+            'session': data['session'],
+            'type': data['type']
         };
 
         var mask = data['type']==='selection'? "form-selection-session" : "form-annotation-session";
@@ -27,8 +26,11 @@ exports.createEvent = function () { // add "options" parameter if needed
             context.vms['vc-worker-main'].init({mask: 'xor-worker-workflow'});
         }
 
-        context.vms['xor-worker-workflow'].active('vc-task-session');
-        context.vms['vc-task-session'].init({mask: mask, input: packet});
-
+        if (!context.vms['xor-task-session']) {
+            context.vms['xor-worker-workflow'].active('vc-task-session');
+            context.vms['xor-task-session'].init({mask: mask, input: packet});
+        } else {
+            context.vms[mask].init(packet);
+        }
     };
 };

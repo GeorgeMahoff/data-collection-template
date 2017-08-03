@@ -14,6 +14,15 @@
   }
 }
 
+.dl-horizontal {
+  dt {
+    width: 200px;
+  }
+  dd {
+    margin-left: 210px;
+  }
+}
+
 .jumbotron {
   margin-top: 20px;
   padding-top: 30px;
@@ -52,4 +61,25 @@ li {
     margin-bottom: 0 !important;
   }
   text-decoration: none !important;
+}
+
+line-drawer {
+  display: inline-block;
+  position: relative;
+  padding: 0;
+  line-height: 0;
+  user-select: none
+}
+
+line-drawer > img.background {
+  max-width: 100%;
+  min-width: 100%;
+}
+
+line-drawer > canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }

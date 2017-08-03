@@ -22,7 +22,6 @@ String.prototype.cutURLTail = function () {
 controls.register();
 
 function ApplicationViewModel() {
-    // TODO: initialize global state
     window.APIkey = "068b24c9-2a09-4fc4-b2ba-a34818944179";
     window.remoteURL = "http://awt.ifmledit.org";
 

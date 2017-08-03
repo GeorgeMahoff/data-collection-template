@@ -6,15 +6,17 @@
         <dt>Current status</dt>
         <dd data-bind="text: item()['status'].toProperCase()"></dd>
 
-        <dt>annotation_replica</dt>
-        <dd data-bind="text: item()['annotation_replica']"></dd>
-        <dt>annotation_size</dt>
-        <dd data-bind="text: item()['annotation_size']"></dd>
-
-        <dt>selection_replica</dt>
+        <dt>Minimum for selection</dt>
         <dd data-bind="text: item()['selection_replica']"></dd>
-        <dt>threshold</dt>
+
+        <dt>Minimum for annotation</dt>
+        <dd data-bind="text: item()['annotation_replica']"></dd>
+
+        <dt>Minimum of positive results</dt>
         <dd data-bind="text: item()['threshold']"></dd>
+
+        <dt>Annotation line width</dt>
+        <dd data-bind="text: item()['annotation_size']"></dd>
     </dl>
     <div class="container">
         <div class="row">

@@ -7,16 +7,36 @@ var ko = require('knockout'),
 function ViewModel(params) {
     var self = this;
     self.context = params.context;
+    self._repository = self.context.repositories['task'];
+    self.image = ko.observable('');
     self.status = ko.observable('');
-    self.fields = ko.observable({});
-    self.errors = ko.observable({});
 
-    self.trigger = function (id) {
-        self.context.events[id](self.context, self.output);
+    self.trigger = function (id, packet) {
+        self.context.events[id](self.context, packet);
     };
 }
 
 ViewModel.prototype.id = 'form-selection-session';
+
+ViewModel.prototype.sendAccept = function () {
+    this.sendResult(true);
+};
+
+ViewModel.prototype.sendReject = function () {
+    this.sendResult(false);
+};
+
+ViewModel.prototype.sendResult = function (bool) {
+    var self = this;
+    self.status('computing');
+    console.log(self.status());
+    var packet = {
+        'accepted': bool
+    };
+    self._repository.sendResult(packet, self.input.session).then(function () {
+        self.trigger('ev-task-session', self.input);
+    })
+};
 
 ViewModel.prototype.waitForStatusChange = function () {
     return this._initializing ||
@@ -24,39 +44,19 @@ ViewModel.prototype.waitForStatusChange = function () {
 };
 
 ViewModel.prototype._compute = function () {
-    this.output = {
-        'accepted': this.input['accepted'],
-        'skyline': this.input['skyline'],
-    }
-    var self = this,
-        fields = {
-            'accepted': ko.observable(this.input['accepted']),
-            'skyline': ko.observable(this.input['skyline']),
-        },
-        errors = {
-            'accepted': ko.observable(this.input['accepted-error']),
-            'skyline': ko.observable(this.input['skyline-error']),
-        };
-    fields['accepted'].subscribe(function (value) {
-        self.output['accepted'] = value;
-        self.errors()['accepted'](undefined);
-    });
-    fields['skyline'].subscribe(function (value) {
-        self.output['skyline'] = value;
-        self.errors()['skyline'](undefined);
-    });
-    this.fields(fields);
-    this.errors(errors);
-    this.status('computed');
+    var self = this;
+    self._repository.getNextInstance(this.input.session).then(function (item) {
+        console.log(item);
+        self.image(window.remoteURL + item.image);
+        self.status('computed');
+    })
 };
-
 
 ViewModel.prototype.init = function (options) {
     options = options || {};
-    this.output = undefined;
-    this.fields({});
-    this.errors({});
-    this.input = options.input || {};
+    console.log(options);
+    console.log(this.context);
+    this.input = options;
     this.status('ready');
     var self = this;
     this._initializing = new Promise(function (resolve) {

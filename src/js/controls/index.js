@@ -16,7 +16,7 @@ exports.register = function () {
     require('./c-xor-worker-workflow').register();
     require('./task/c-vc-task-list').register();
     require('./task/c-vc-task-details').register();
-    require('./task/c-vc-task-session').register();
+    require('./task/c-xor-task-session').register();
     require('./task/c-list-task').register();
     require('./task/c-det-task').register();
     require('./auth/c-vc-auth-block').register();
@@ -51,4 +51,5 @@ exports.register = function () {
     require('./task/c-form-annotation-session').register();
     require('./task/c-form-selection-session').register();
     require('./c-vc-about').register();
+    require('./line-drawer').register();
 };

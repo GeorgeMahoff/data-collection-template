@@ -6,14 +6,18 @@ var ko = require('knockout');
 function ViewModel(params) {
     var self = this;
     self.context = params.context;
+    self._repository = self.context.repositories['task'];
     self.active = ko.observable(undefined);
 
     self.init = function (options) {
         options = options || {};
-        self.active(self.defaultChild);
-        if (self.defaultChild && options.mask !== self.defaultChild) {
-            self.context.vms[self.defaultChild].init(options);
-        }
+        self.output = options.input;
+        self.active(options.mask);
+        console.log("XOR init");
+        console.log(options);
+        self._repository.startSession(self.output.session).then(function () {
+            self.context.vms[options.mask].init(options.input);
+        })
     };
 
     self.landmark = function (id) {
@@ -21,15 +25,14 @@ function ViewModel(params) {
         self.context.vms[id].init();
     };
     self.trigger = function (id) {
-        self.context.events[id](self.context);
+        self.context.events[id](self.context, self.output);
     };
 }
 
-ViewModel.prototype.id = 'vc-task-session';
-ViewModel.prototype.defaultChild = 'form-annotation-session';
+ViewModel.prototype.id = 'xor-task-session';
 
 exports.register = function () {
-    ko.components.register('c-vc-task-session', {
+    ko.components.register('c-xor-task-session', {
         viewModel: {
             createViewModel: function (params, componentInfo) {
                 var vm = new ViewModel(params);

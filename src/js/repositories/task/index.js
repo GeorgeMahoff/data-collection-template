@@ -39,4 +39,37 @@ Repository.prototype.getStatistic = function (statisticURL) {
     }));
 };
 
+Repository.prototype.startSession = function (taskURL) {
+    return Promise.resolve($.ajax({
+        url: window.remoteURL + taskURL,
+        type: 'POST',
+        headers: {
+            "Authorization" : "APIToken " + $.cookie("token")
+        }
+    }));
+};
+
+Repository.prototype.getNextInstance = function (taskURL) {
+    return Promise.resolve($.ajax({
+        url: window.remoteURL + taskURL,
+        type: 'GET',
+        headers: {
+            "Authorization": "APIToken " + $.cookie("token")
+        }
+    }));
+};
+
+Repository.prototype.sendResult = function (packet, taskURL) {
+    var formJson = JSON.stringify(packet);
+    return Promise.resolve($.ajax({
+        url: window.remoteURL + taskURL,
+        type: 'PUT',
+        headers: {
+            "Authorization": "APIToken " + $.cookie("token"),
+            "Content-Type" : "application/json"
+        },
+        data: formJson
+    }));
+};
+
 exports.createRepository = Repository;
