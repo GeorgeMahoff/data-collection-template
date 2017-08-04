@@ -13,8 +13,6 @@ function ViewModel(params) {
         options = options || {};
         self.output = options.input;
         self.active(options.mask);
-        console.log("XOR init");
-        console.log(options);
         self._repository.startSession(self.output.session).then(function () {
             self.context.vms[options.mask].init(options.input);
         })

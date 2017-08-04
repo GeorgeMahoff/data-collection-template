@@ -3,6 +3,7 @@
 
 var Promise = require('bluebird');
 
+
 function Repository(options) {
     if (!(this instanceof Repository)) {
         return new Repository(options);

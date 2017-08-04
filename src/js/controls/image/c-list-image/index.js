@@ -42,20 +42,11 @@ ViewModel.prototype._compute = function() {
         this._computing.cancel();
     }
     var self = this;
-    this._computing = this._repository.find(this.filters['id']).then(function (items) {
-        self.selected(undefined);
-        items = items['images'];
-        if (items.length) {
-            for (var i = 0; i < items.length; i++) {
-                items[i].canonical = window.remoteURL + items[i].canonical;
-            }
-            self.selected(items[0].id);
-            self.output = items[0];
-        }
-        self.items(items);
-        self.status('computed');
-        self._computing = undefined;
-    });
+    self.status('computing');
+    this._computing = this._repository.findWithStatistics(this.filters['id'], self.items, self.filters.campaign.threshold)
+        .then(function () {
+            self.status('computed');
+        });
 };
 
 

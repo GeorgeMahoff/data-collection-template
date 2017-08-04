@@ -1,7 +1,8 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var Promise = require('bluebird')
+var Promise = require('bluebird'),
+    ko = require('knockout');
 
 function Repository(options) {
     if (!(this instanceof Repository)) {
@@ -65,6 +66,33 @@ Repository.prototype.find = function (campaignId) {
             "Authorization" : "APIToken " + $.cookie("token")
         }
     }));
+};
+
+Repository.prototype.findWithStatistics = function (campaignId, global, threshold) {
+    var self = this;
+    return Promise.resolve(
+        self.find(campaignId).then(function (items) {
+            return Promise.resolve(
+                items.images.forEach(function (item) {
+                    return Promise.resolve(
+                        self.findById(item.id).then(function (details) {
+                            return Promise.resolve(
+                                self.getStatistic(details.statistics).then(
+                                    function (stat) {
+                                        var img = ko.observable({
+                                            accepted: stat.selection.accepted >= threshold,
+                                            id: item.id,
+                                            canonical: window.remoteURL + item.canonical
+                                        });
+                                        global.push(img);
+                                    }
+                                )
+                            )
+                        })
+                    )
+                }))
+        })
+    );
 };
 
 Repository.prototype.getStatistic = function (statisticsURL) {

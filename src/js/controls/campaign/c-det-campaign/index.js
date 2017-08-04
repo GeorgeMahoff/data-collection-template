@@ -48,10 +48,8 @@ ViewModel.prototype._compute = function() {
     var self = this;
     this._computing = this._repository.findById(this.filters.id).then(function (item) {
         self.item(item);
-        console.log(item);
         if(item.status === 'ended') {
             self._repository.getStatistic(item.statistics).then(function (stat) {
-                console.log(stat);
                 self.statistics(stat);
                 self.status('computed');
                 self._computing = undefined;

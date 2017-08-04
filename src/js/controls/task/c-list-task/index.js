@@ -36,29 +36,11 @@ ViewModel.prototype._compute = function() {
         this._computing.cancel();
     }
     var self = this;
-    this._computing = this._repository.find().then(function (items) {
-        self.selected(undefined);
-        var tasks = items['tasks'];
-
-        if (tasks.length) {
-            Promise.resolve(
-                tasks.forEach(function (i) {
-                    self._repository.findById(i.id).then(function (detail) {
-                        var update = ko.observable(
-                            {
-                                id: detail.id,
-                                campaign: detail.campaign,
-                                type: detail.type
-                            });
-                        self.items.push(update);
-                    })
-                })
-            ).then(function () {
-                self.status('computed');
-                self._computing = undefined;
-            });
-        }
-    });
+    self.status('computing');
+    this._computing = this._repository.findWithStatistics(self.items)
+        .then(function () {
+            self.status('computed');
+        });
 };
 
 

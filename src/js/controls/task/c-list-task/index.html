@@ -4,12 +4,15 @@
         <tr>
             <th>Campaign</th>
             <th>Type</th>
+            <th>Available</th>
         </tr>
     </thead>
     <tbody data-bind="foreach: items">
         <tr data-bind="click: $parent.select">
             <td data-bind="text: $data['campaign']" style="white-space: pre-wrap;"></td>
             <td data-bind="text: $data['type'].toProperCase()" style="white-space: pre-wrap;"></td>
+            <td data-bind="text: $data['available']" style="white-space: pre-wrap;"></td>
         </tr>
     </tbody>
 </table>
+<h4 class="gray" data-bind="if: items().length===0">No tasks were found</h4>

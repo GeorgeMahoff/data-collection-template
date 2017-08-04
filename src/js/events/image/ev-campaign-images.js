@@ -14,7 +14,8 @@ exports.createEvent = function () { // add "options" parameter if needed
                 'campaign': {
                     'name': data['name'],
                     'status': data['status'],
-                    'id': data['id']
+                    'id': data['id'],
+                    'threshold': data['threshold']
                 },
                 'id' : data['image']
             };

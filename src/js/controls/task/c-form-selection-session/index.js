@@ -29,7 +29,6 @@ ViewModel.prototype.sendReject = function () {
 ViewModel.prototype.sendResult = function (bool) {
     var self = this;
     self.status('computing');
-    console.log(self.status());
     var packet = {
         'accepted': bool
     };
@@ -46,7 +45,6 @@ ViewModel.prototype.waitForStatusChange = function () {
 ViewModel.prototype._compute = function () {
     var self = this;
     self._repository.getNextInstance(this.input.session).then(function (item) {
-        console.log(item);
         if (item){
             self.image(window.remoteURL + item.image);
             self.status('computed');
@@ -58,8 +56,6 @@ ViewModel.prototype._compute = function () {
 
 ViewModel.prototype.init = function (options) {
     options = options || {};
-    console.log(options);
-    console.log(this.context);
     this.input = options;
     this.output = this.input;
     this.status('ready');

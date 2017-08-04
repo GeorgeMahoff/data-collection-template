@@ -1,7 +1,8 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var Promise = require('bluebird');
+var Promise = require('bluebird'),
+    ko = require('knockout');
 
 function Repository(options) {
     if (!(this instanceof Repository)) {
@@ -27,6 +28,34 @@ Repository.prototype.find = function () {
             "Authorization" : "APIToken " + $.cookie("token")
         }
     }));
+};
+
+Repository.prototype.findWithStatistics = function (global) {
+    var self = this;
+    return Promise.resolve(
+        self.find().then(function (items) {
+            return Promise.resolve(
+                items.tasks.forEach(function (item) {
+                    return Promise.resolve(
+                        self.findById(item.id).then(function (details) {
+                            return Promise.resolve(
+                                self.getStatistic(details.statistics).then(
+                                    function (stat) {
+                                        var task = ko.observable({
+                                            campaign: details.campaign,
+                                            id: item.id,
+                                            type: item.type,
+                                            available: stat.available > 0 ? "Yes":"No"
+                                        });
+                                        global.push(task);
+                                    }
+                                )
+                            )
+                        })
+                    )
+                }))
+        })
+    );
 };
 
 Repository.prototype.getStatistic = function (statisticURL) {
@@ -59,7 +88,6 @@ Repository.prototype.getNextInstance = function (taskURL) {
                     "Authorization": "APIToken " + $.cookie("token")
                 }
             }).complete(function(data) {
-                console.log("ping");
                 return data
             })
         ).then(function (item) {

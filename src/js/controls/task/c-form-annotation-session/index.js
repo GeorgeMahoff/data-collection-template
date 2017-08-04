@@ -33,8 +33,6 @@ ViewModel.prototype.clear = function () {
 ViewModel.prototype.sendResult = function () {
     var self = this;
     self.status('computing');
-    console.log(self.line());
-    console.log(self.status());
     var packet = {
         'skyline': self.line()
     };
@@ -46,7 +44,6 @@ ViewModel.prototype.sendResult = function () {
 ViewModel.prototype._compute = function () {
     var self = this;
     self._repository.getNextInstance(this.input.session).then(function (item) {
-        console.log(item);
         if (item){
             self.image(window.remoteURL + item.image);
             self.width(item.size);
@@ -59,7 +56,6 @@ ViewModel.prototype._compute = function () {
 
 ViewModel.prototype.init = function (options) {
     options = options || {};
-    console.log(options);
     this.input = options || {};
     this.output = this.input;
     this.status('ready');
