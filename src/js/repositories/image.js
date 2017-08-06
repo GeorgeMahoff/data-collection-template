@@ -22,30 +22,32 @@ Repository.prototype.delete = function (id) {
 
 Repository.prototype.insert = function (parameters) {
 
-    var image = parameters["image"];
-    var fd = new FormData();
-    fd.append("file", image);
+    var images = parameters["image"];
 
-    return Promise.resolve($.ajax({
-        url: window.remoteURL+parameters['id'],
-        type: 'POST',
-        headers: {
-            "Authorization" : "APIToken " + $.cookie('token')
-        },
-        data: fd,
-        cache: false,
-        contentType: false,
-        processData: false,
-        xhr: function() {
-            return $.ajaxSettings.xhr();
-        },
-        success: function() {
-            $.notify({message: 'Image uploaded!'}, {allow_dismiss: true, type: 'success'});
-        },
-        error: function(data) {
-            console.log(data)
-        }
-    }));
+    return Promise.resolve(
+        function () {
+            var acc = [];
+            for(var i=0; i<images.length; i++){
+                var fd = new FormData();
+                fd.append("images", images[i]);
+                acc.push(Promise.resolve($.ajax({
+                    url: window.remoteURL+parameters['id'],
+                    type: 'POST',
+                    headers: {
+                        "Authorization" : "APIToken " + $.cookie('token')
+                    },
+                    data: fd,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    xhr: function() {
+                        return $.ajaxSettings.xhr();
+                    }
+                })))
+            }
+            return acc
+        }()
+    );
 };
 
 Repository.prototype.findById = function (id) {

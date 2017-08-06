@@ -15,7 +15,7 @@ function ViewModel(params) {
     };
 
     self.onUpload = function (vm, evt) {
-        self.output['image'] = evt.target.files[0];
+        self.output['image'] = evt.target.files;
     };
 }
 
@@ -49,12 +49,16 @@ ViewModel.prototype.init = function (options) {
 
 ViewModel.prototype.uploadImage = function() {
     var self = this;
-    this._repository.insert(self.output).then(function () {
-        var packet = {
-            id: self.output.id,
-            campaign: self.output.campaign
-        };
-        self.context.events['ev-campaign-images'](self.context, packet);
+    self.status("computing");
+    this._repository.insert(self.output).then(function (promises) {
+        Promise.all(promises).then(function () {
+            var packet = {
+                id: self.output.id,
+                campaign: self.output.campaign
+            };
+            self.context.events['ev-campaign-images'](self.context, packet);
+        })
+
     });
 };
 

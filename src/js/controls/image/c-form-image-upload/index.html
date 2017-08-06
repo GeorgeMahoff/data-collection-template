@@ -1,7 +1,7 @@
 <h3>Select new image <small>Should be .jpeg</small></h3>
 <form enctype="multipart/form-data" data-bind="submit: uploadImage">
-    <input id="form-image-upload_field_0" data-bind="event:{change: onUpload}" type="file" class="form-control validate" aria-describedby="form-image-upload_field_0_error" required>
-    <button type="submit" class="btn btn-primary col-xs-2">
+    <input id="form-image-upload_field_0" data-bind="event:{change: onUpload}" type="file" class="form-control validate" aria-describedby="form-image-upload_field_0_error" multiple required>
+    <button type="submit" data-bind="visible: status()==='computed'" class="btn btn-primary col-xs-2">
         Submit
     </button>
 </form>
