@@ -6,6 +6,7 @@ var ko = require('knockout'),
 
 function ViewModel(params) {
     var self = this;
+    self._repository = params.context.repositories['user'];
     self.context = params.context;
     self.status = ko.observable('');
     self.fields = ko.observable({});
@@ -21,6 +22,18 @@ ViewModel.prototype.id = 'form-sign-up';
 ViewModel.prototype.waitForStatusChange = function () {
     return this._initializing ||
            Promise.resolve();
+};
+
+ViewModel.prototype.submitForm = function () {
+    var self = this;
+    self._repository.insert(self.output)
+        .then(function () {
+            self.trigger('ev-register-success');
+        })
+        .catch(function (e) {
+            var json = e.responseJSON || {};
+            self.errors(json.error);
+        });
 };
 
 ViewModel.prototype._compute = function () {
@@ -45,19 +58,15 @@ ViewModel.prototype._compute = function () {
         };
     fields['fullname'].subscribe(function (value) {
         self.output['fullname'] = value;
-        self.errors()['fullname'](undefined);
     });
     fields['password'].subscribe(function (value) {
         self.output['password'] = value;
-        self.errors()['password'](undefined);
     });
     fields['type'].subscribe(function (value) {
         self.output['type'] = value;
-        self.errors()['type'](undefined);
     });
     fields['username'].subscribe(function (value) {
         self.output['username'] = value;
-        self.errors()['username'](undefined);
     });
     this.fields(fields);
     this.errors(errors);

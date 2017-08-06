@@ -1,4 +1,4 @@
-<form data-bind="submit: trigger.bind($data, 'ev-signup-submit')">
+<form data-bind="submit: submitForm">
     <div class="form-group" data-bind="css: {'has-error': errors()['fullname']}">
         <label for="form-sign-up_field_0" data-bind="css: {active: fields()['fullname']}, attr: {'data-error': errors()['fullname']}" class="control-label">Enter your full name</label>
         <small>Should be minimum length of 3</small>

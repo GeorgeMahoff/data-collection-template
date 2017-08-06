@@ -40,7 +40,8 @@ ViewModel.prototype.createNewCampaign = function () {
                 self.context.events['ev-list-campaign-selected'](self.context, {id: data});
             })
             .catch(function (e) {
-                self.errors(e.responseJSON.error)
+                var json = e.responseJSON || {};
+                self.errors(json.error)
             });
     }
 };
@@ -76,23 +77,18 @@ ViewModel.prototype._compute = function () {
         };
     fields['annotation_replica'].subscribe(function (value) {
         self.output['annotation_replica'] = value;
-        self.errors()['annotation_replica'](undefined);
     });
     fields['annotation_size'].subscribe(function (value) {
         self.output['annotation_size'] = value;
-        self.errors()['annotation_size'](undefined);
     });
     fields['name'].subscribe(function (value) {
         self.output['name'] = value;
-        self.errors()['name'](undefined);
     });
     fields['selection_replica'].subscribe(function (value) {
         self.output['selection_replica'] = value;
-        self.errors()['selection_replica'](undefined);
     });
     fields['threshold'].subscribe(function (value) {
         self.output['threshold'] = value;
-        self.errors()['threshold'](undefined);
     });
     this.fields(fields);
     this.errors(errors);

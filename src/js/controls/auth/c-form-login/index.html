@@ -1,6 +1,6 @@
-<form data-bind="submit: trigger.bind($data, 'ev-login-form-submit')">
-    <div class="form-group" data-bind="css: {'has-error': errors()['username']}">
-        <label for="form-login_field_1" data-bind="css: {active: fields()['username']}, attr: {'data-error': errors()['username']}" class="control-label">Username</label>
+<form data-bind="submit: submitForm">
+    <div class="form-group" data-bind="css: {'has-error': errors()['password']}">
+        <label for="form-login_field_1" data-bind="css: {active: fields()['username']}, attr: {'data-error': errors()['password']}" class="control-label">Username</label>
         <input id="form-login_field_1" data-bind="value: fields()['username']" type="text" class="form-control validate" aria-describedby="form-login_field_1_error" required>
         <span id="form-login_field_1_error" class="help-block" data-bind="text: errors()['username']"></span>
     </div>

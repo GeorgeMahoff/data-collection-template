@@ -6,6 +6,7 @@ var ko = require('knockout'),
 
 function ViewModel(params) {
     var self = this;
+    self._repository = params.context.repositories['user'];
     self.context = params.context;
     self.status = ko.observable('');
     self.fields = ko.observable({});
@@ -23,27 +24,37 @@ ViewModel.prototype.waitForStatusChange = function () {
            Promise.resolve();
 };
 
+ViewModel.prototype.submitForm = function () {
+    var self = this;
+    self._repository.update(self.output)
+        .then(function () {
+            self.trigger('ev-body-init');
+        })
+        .catch(function (e) {
+            var json = e.responseJSON || {};
+            self.errors(json.error);
+        });
+};
+
 ViewModel.prototype._compute = function () {
     this.output = {
         'fullname': this.input['fullname'],
-        'password': this.input['password'],
-    }
+        'password': this.input['password']
+    };
     var self = this,
         fields = {
             'fullname': ko.observable(this.input['fullname']),
-            'password': ko.observable(this.input['password']),
+            'password': ko.observable(this.input['password'])
         },
         errors = {
             'fullname': ko.observable(this.input['fullname-error']),
-            'password': ko.observable(this.input['password-error']),
+            'password': ko.observable(this.input['password-error'])
         };
     fields['fullname'].subscribe(function (value) {
         self.output['fullname'] = value;
-        self.errors()['fullname'](undefined);
     });
     fields['password'].subscribe(function (value) {
         self.output['password'] = value;
-        self.errors()['password'](undefined);
     });
     this.fields(fields);
     this.errors(errors);

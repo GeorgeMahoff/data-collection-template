@@ -1,8 +1,14 @@
-<span data-bind="if: item">
-    <a class="navbar-text">Hello, <strong data-bind="text: item()['fullname']"></strong>!</a>
-    <a class="navbar-text">Your username: <strong data-bind="text: item()['username']"></strong></a>
-    <a class="navbar-text">Your role: <strong data-bind="text: item()['type'].toProperCase()"></strong></a>
-</span>
+<div class="navbar-header">
+    <span data-bind="if: item">
+        <a class="navbar-text">Hello, <strong data-bind="text: item()['fullname']"></strong>!</a>
+        <a class="navbar-text">Your username: <strong data-bind="text: item()['username']"></strong></a>
+        <a class="navbar-text">Your role: <strong data-bind="text: item()['type'].toProperCase()"></strong></a>
+    </span>
+</div>
+<div class="nav navbar-nav navbar-right subnav">
+    <button class="btn btn-default navbar-btn" data-bind="click: trigger.bind($data,'ev-edit-account')">Edit account</button>
+    <button class="btn btn-default navbar-btn" data-bind="click: trigger.bind($data,'ev-logout')">Logout</button>
+</div>
 
 
 

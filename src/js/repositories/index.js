@@ -7,5 +7,6 @@ exports.createRepositories = function (options) {
     repositories['image'] = require('./image').createRepository(options);
     repositories['worker'] = require('./worker').createRepository(options);
     repositories['campaign'] = require('./campaign').createRepository(options);
+    repositories['user'] = require('./user').createRepository(options);
     return repositories;
 };

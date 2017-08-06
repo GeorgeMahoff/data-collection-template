@@ -6,6 +6,7 @@ var ko = require('knockout'),
 
 function ViewModel(params) {
     var self = this;
+    self._repository = params.context.repositories['user'];
     self.context = params.context;
     self.status = ko.observable('');
     self.fields = ko.observable({});
@@ -21,6 +22,19 @@ ViewModel.prototype.id = 'form-login';
 ViewModel.prototype.waitForStatusChange = function () {
     return this._initializing ||
            Promise.resolve();
+};
+
+ViewModel.prototype.submitForm = function () {
+    var self = this;
+    self._repository.findByCredentials(self.output)
+        .then(function (data) {
+            $.cookie("token",data["token"]);
+            self.trigger('ev-body-init');
+        })
+        .catch(function (e) {
+            var json = e.responseJSON || {};
+            self.errors({password:json.error});
+        });
 };
 
 ViewModel.prototype._compute = function () {
@@ -39,11 +53,9 @@ ViewModel.prototype._compute = function () {
         };
     fields['password'].subscribe(function (value) {
         self.output['password'] = value;
-        self.errors()['password'](undefined);
     });
     fields['username'].subscribe(function (value) {
         self.output['username'] = value;
-        self.errors()['username'](undefined);
     });
     this.fields(fields);
     this.errors(errors);

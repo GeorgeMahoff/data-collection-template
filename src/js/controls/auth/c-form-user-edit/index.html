@@ -1,5 +1,5 @@
 <h3>Account edit</h3>
-<form data-bind="submit: trigger.bind($data, 'ev-user-update-submit')">
+<form data-bind="submit: submitForm">
     <div class="form-group" data-bind="css: {'has-error': errors()['fullname']}">
         <label for="form-user-edit_field_0" data-bind="css: {active: fields()['fullname']}, attr: {'data-error': errors()['fullname']}" class="control-label">Your new full name</label>
         <small>Should be minimum length of 3</small>
