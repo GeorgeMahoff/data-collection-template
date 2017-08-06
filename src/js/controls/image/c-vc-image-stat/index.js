@@ -9,23 +9,30 @@ function ViewModel(params) {
 
     self.init = function (options) {
         options = options || {};
+        self.output = {
+            id: options.input.id,
+            campaign: options.input.campaign,
+            selected: options.input.selected
+        };
+        var annotationList = {
+            canonical: options.input.selected.canonical,
+            annotation: options.input.annotation
+        };
         self.children.forEach(function (child){
             if (child === options.mask) {
-                return;
+                self.context.vms[child].init(annotationList);
             }
-            self.context.vms[child].init(options);
         });
     };
 
     self.trigger = function (id) {
-        self.context.events[id](self.context);
+        self.context.events[id](self.context, self.output);
     };
 }
 
 ViewModel.prototype.id = 'vc-image-stat';
 ViewModel.prototype.children = [
-    'det-image-stat' // imageStatistics
-    ,'list-annotation' // Annotation list
+    'list-annotation' // Annotation list
 ];
 
 exports.register = function () {

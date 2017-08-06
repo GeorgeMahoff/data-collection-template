@@ -11,6 +11,7 @@ function ViewModel(params) {
     self.status = ko.observable('');
     self.item = ko.observable(undefined);
     self.camStatus = ko.observable(undefined);
+    self.statistics = ko.observable(undefined);
 
     self.trigger = function (id) {
         self.context.events[id](self.context, self.output);
@@ -40,10 +41,11 @@ ViewModel.prototype._compute = function() {
     this._computing = this._repository.findById(this.filters.id, this.fields).then(function (item) {
         item['canonical']=window.remoteURL+item['canonical'];
         self.item(item);
-        self.status('computed');
+
         self._repository.getStatistic(item.statistics).then(function (stat) {
-            console.log("STAT")
-            console.log(stat);
+            self.statistics(stat);
+            self.output.annotation = stat.annotation;
+            self.status('computed');
         });
         self._computing = undefined;
     });
@@ -58,10 +60,7 @@ ViewModel.prototype.deleteImage = function() {
 
 ViewModel.prototype.init = function (options) {
     options = options || {};
-    this.output = {
-        id: options.id,
-        campaign: options.campaign
-    };
+    this.output = options;
     this.camStatus(options.campaign.status === "ready");
     this.filters = options.selected || {};
     this.status('ready');

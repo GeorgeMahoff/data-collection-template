@@ -4,9 +4,7 @@
 var Promise = require('bluebird');
 
 function Action() {}
-Action.prototype.run = function (parameters, solve) { // add "onCancel" parameters if needed
-    // Parameters:
-
+Action.prototype.run = function (parameters, solve) {
     $.ajax({
         url: window.remoteURL+'/api/auth',
         type: 'DELETE',

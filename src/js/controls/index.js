@@ -38,7 +38,6 @@ exports.register = function () {
     require('./image/c-list-image').register();
     require('./image/c-form-image-upload').register();
     require('./worker/c-list-workers').register();
-    require('./image/c-det-image-stat').register();
     require('./image/c-list-annotation').register();
     require('./campaign/c-vc-campaign-list').register();
     require('./campaign/c-list-campaigns').register();

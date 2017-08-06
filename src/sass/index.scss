@@ -14,6 +14,11 @@
   }
 }
 
+.raised-statistic-img {
+  @extend .raised-statistic;
+  margin-top: -31px !important;
+}
+
 .dl-horizontal {
   dt {
     width: 200px;
@@ -86,4 +91,10 @@ line-drawer > canvas {
 
 .accepted-image {
   background-color: #6bc765;
+}
+
+.annotation-image {
+  background-repeat:no-repeat;
+  background-size:contain;
+  background-position:center;
 }

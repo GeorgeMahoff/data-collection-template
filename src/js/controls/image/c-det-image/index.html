@@ -1,11 +1,16 @@
 <h3>Image details</h3>
-<dl class="dl-horizontal" data-bind="if: item">
-        <img height="300px" data-bind="attr:{src: item()['canonical']}" />
-</dl>
 <div class="container">
-    <div class="row" data-bind="if: camStatus">
-        <a class="col-xs-2 btn btn-primary" data-bind="visible: camStatus, click: deleteImage">Delete</a>
-        <a class="col-xs-2 btn btn-primary" data-bind="click: trigger.bind($data, 'ev-to-image-statistic')">statistics</a>
+    <div class="col-xs-9" data-bind="if: item">
+        <img height="300px" data-bind="attr:{src: item()['canonical']}" />
+    </div>
+    <ul class="list-group col-xs-3 pull-right raised-statistic-img" data-bind="if: statistics">
+        <li class="list-group-item active text-center">Statistics</li>
+        <li data-bind="visible: statistics().selection['accepted']>=0, text: 'Accepted: '+statistics().selection['accepted']" class="list-group-item text-center"></li>
+        <li data-bind="visible: statistics().selection['rejected']>=0, text: 'Rejected: '+statistics().selection['rejected']" class="list-group-item text-center"></li>
+        <li data-bind="visible: statistics().annotation.length>0, text: 'Annotations: '+statistics().annotation.length" class="list-group-item text-center"></li>
+    </ul>
+    <div class="row" data-bind="if: statistics">
+        <a class="col-xs-2 btn btn-primary" data-bind="visible: camStatus(), click: deleteImage">Delete</a>
+        <a class="col-xs-2 btn btn-primary" data-bind="visible: statistics().annotation.length>0, click: trigger.bind($data, 'ev-to-image-statistic')">To annotation list</a>
     </div>
 </div>
-

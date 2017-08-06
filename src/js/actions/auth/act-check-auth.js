@@ -8,7 +8,6 @@ var Promise = require('bluebird');
 function Action() {}
 
 Action.prototype.run = function (parameters, solve) {
-
     $.ajax({
         url: window.remoteURL + '/api/user/me',
         type: 'GET',

@@ -32,6 +32,7 @@ Action.prototype.run = function (parameters, solve) {
             });
         },
         error: function(data) {
+            console.log(data);
         }
     });
 };
