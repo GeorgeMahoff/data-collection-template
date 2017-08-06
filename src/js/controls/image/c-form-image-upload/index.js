@@ -9,6 +9,7 @@ function ViewModel(params) {
     self._repository = params.context.repositories['image'];
     self.context = params.context;
     self.status = ko.observable('');
+    self.error = ko.observable('');
 
     self.trigger = function (id) {
         self.context.events[id](self.context, self.output);
@@ -57,6 +58,9 @@ ViewModel.prototype.uploadImage = function() {
                 campaign: self.output.campaign
             };
             self.context.events['ev-campaign-images'](self.context, packet);
+        }).catch(function (e) {
+            self.error(e.responseJSON.error);
+            self.status('computed');
         })
 
     });

@@ -27,13 +27,21 @@ ViewModel.prototype.createNewCampaign = function () {
     };
     if (this.isEdit()){
         packet.url = self.url;
-        this._repository.update(packet).then(function() {
-            self.context.events['ev-list-campaign-selected'](self.context, {id: self.url});
-        });
+        this._repository.update(packet)
+            .then(function() {
+                self.context.events['ev-list-campaign-selected'](self.context, {id: self.url});
+            })
+            .catch(function (e) {
+                self.errors(e.responseJSON.error)
+            });
     }else {
-        this._repository.insert(packet).then(function(data) {
-            self.context.events['ev-list-campaign-selected'](self.context, {id: data});
-        });
+        this._repository.insert(packet)
+            .then(function(data) {
+                self.context.events['ev-list-campaign-selected'](self.context, {id: data});
+            })
+            .catch(function (e) {
+                self.errors(e.responseJSON.error)
+            });
     }
 };
 
@@ -57,14 +65,14 @@ ViewModel.prototype._compute = function () {
             'annotation_size': ko.observable(this.input['annotation_size']),
             'name': ko.observable(this.input['name']),
             'selection_replica': ko.observable(this.input['selection_replica']),
-            'threshold': ko.observable(this.input['threshold']),
+            'threshold': ko.observable(this.input['threshold'])
         },
         errors = {
             'annotation_replica': ko.observable(this.input['annotation_replica-error']),
             'annotation_size': ko.observable(this.input['annotation_size-error']),
             'name': ko.observable(this.input['name-error']),
             'selection_replica': ko.observable(this.input['selection_replica-error']),
-            'threshold': ko.observable(this.input['threshold-error']),
+            'threshold': ko.observable(this.input['threshold-error'])
         };
     fields['annotation_replica'].subscribe(function (value) {
         self.output['annotation_replica'] = value;
